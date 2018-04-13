@@ -6,18 +6,21 @@
 
 using namespace std;
 
-AllegroMapProvider::AllegroMapProvider(){
+AllegroProvider::AllegroProvider(){
 	this->display = NULL;
-	this->image = NULL;
 	al_init();
 	al_init_image_addon();
 }
 
-void setDisplay(int width, int height){
+void AllegroProvider::setDisplay(int width, int height){
 	this->width = width;
 	this->height = height;
 }
 
-ALLEGRO_DISPLAY* loadDisplay(){
+ALLEGRO_DISPLAY* AllegroProvider::loadDisplay(){
 	this->display = al_create_display(this->width,this->height); 
+}
+
+voi AllegroProvider::setBackgroundColor(int r,int g, int b){
+	al_clear_to_color(al_map_rgb(r,g,b));
 }

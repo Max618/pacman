@@ -11,6 +11,7 @@ AllegroImageProvider::AllegroImageProvider(){
 }
 
 AllegroImageProvider::~AllegroImageProvider(){
+	al_destroy_bitmap(this->image);
 	delete [] image;
 }
 

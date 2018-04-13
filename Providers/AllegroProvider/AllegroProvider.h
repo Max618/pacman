@@ -10,15 +10,11 @@ class AllegroProvider {
 	private:
 		int width, height;
 		ALLEGRO_DISPLAY *display; //Tela
-   		ALLEGRO_BITMAP  *image; //Imagem
 	public:
 		AllegroProvider();
 		void setDisplay(int,int);
 		ALLEGRO_DISPLAY* loadDisplay();
-		void setImg(char*);
-		ALLEGRO_BITMAP* getImg();
 		void setBackgroundColor(int, int, int);
 		void destroyDisplay();
-		void destroyImage();
 };
 #endif
