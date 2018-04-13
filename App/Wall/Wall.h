@@ -1,6 +1,7 @@
 #ifndef WALL_H
 #define WALL_H
-class Wall {
+#include "../../Providers/AllegroProvider/AllegroProvider.h"
+class Wall : public AllegroProvider {
 /*----------------- File: Wall.h ---------------------+
 |DESCRICAO DO ARQUIVO 								  |
 | 													  |
@@ -8,11 +9,11 @@ class Wall {
 | Implementado por “Gabriel Maximiniano" em 11/04/2018|
 +-----------------------------------------------------+ */
 	private:
-		char color[7];
-		float width, height, position_x, position_y;
+		char imageName[50];
+		float position_x, position_y;
 	public:
-		void setColor(char[]);
-		char* getColor();
+		void setImageName(char[]);
+		char* getImageName();
 		void setWidth(float);
 		float getWidth();
 		void setHeight(float);
@@ -21,5 +22,8 @@ class Wall {
 		float getPositionX();
 		void setPositionY(float);
 		float getPositionY();
+
+		Wall();
+		~Wall();
 };
 #endif

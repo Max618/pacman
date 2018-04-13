@@ -5,8 +5,16 @@
 
 using namespace std;
 
-void Wall::setColor(char c[]){
-	strcpy(this->color, c);
+Wall::Wall(){
+	this->imageName = "\0";
+	this->position_x = this->position_y = -1;
+}
+
+Wall::~Wall(){
+}
+
+void Wall::setImageName(char c[]){
+	strcpy(this->imageName, c);
 }
 
 void Wall::setWidth(float w){
@@ -25,8 +33,8 @@ void Wall::setPositionY(float y){
 	this->position_y = y;
 }
 
-char* Wall::getColor(){
-	return this->color;
+char* Wall::getImageName(){
+	return this->imageName;
 }
 
 float Wall::getWidth(){
