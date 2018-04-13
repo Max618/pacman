@@ -1,7 +1,7 @@
-#ifndef ALLEGROMAPPROVIDER_H
-#define ALLEGROMAPPROVIDER_H
-class AllegroMapProvider {
-/*----------------- File: Wall.h ---------------------+
+#ifndef ALLEGROPROVIDER_H
+#define ALLEGROPROVIDER_H
+class AllegroProvider {
+/*----------------- File: AllegroProvider.h ---------------------+
 |DESCRICAO DO ARQUIVO 								  |
 | 													  |
 | 													  |
@@ -12,7 +12,7 @@ class AllegroMapProvider {
 		ALLEGRO_DISPLAY *display; //Tela
    		ALLEGRO_BITMAP  *image; //Imagem
 	public:
-		AllegroMapProvider();
+		AllegroProvider();
 		void setDisplay(int,int);
 		ALLEGRO_DISPLAY* loadDisplay();
 		void setImg(char*);
