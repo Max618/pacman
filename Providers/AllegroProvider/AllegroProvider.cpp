@@ -24,3 +24,7 @@ ALLEGRO_DISPLAY* AllegroProvider::loadDisplay(){
 void AllegroProvider::setBackgroundColor(int r,int g, int b){
 	al_clear_to_color(al_map_rgb(r,g,b));
 }
+
+void AllegroProvider::destroyDisplay(){
+	al_destroy_display(this->display);
+}

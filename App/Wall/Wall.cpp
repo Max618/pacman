@@ -2,53 +2,32 @@
 #include"Wall.h"
 #include<string.h>
 #include<stdio.h>
+#include <allegro5/allegro.h>
+#include <allegro5/allegro_image.h>
 
 using namespace std;
 
 Wall::Wall(){
-	this->imageName = "\0";
+	this->imageName = NULL;
 	this->position_x = this->position_y = -1;
 }
 
 Wall::~Wall(){
+	al_destroy_bitmap(this->imageName);
+	delete [] this->imageName;
 }
 
-void Wall::setImageName(char c[]){
-	strcpy(this->imageName, c);
-}
-
-void Wall::setWidth(float w){
-	this->width = w;
-}
-
-void Wall::setHeight(float h){
-	this->height = h;
-}
-
-void Wall::setPositionX(float x){
+void Wall::setImage(char* filename,int x, int y){
+	this->imageName = al_load_bitmap(filename);
 	this->position_x = x;
-}
-
-void Wall::setPositionY(float y){
 	this->position_y = y;
 }
 
-char* Wall::getImageName(){
-	return this->imageName;
+void Wall::loadImage(){
+	al_draw_bitmap(this->imageName,this->position_x,this->position_y,0);
 }
-
-float Wall::getWidth(){
-	return this->width;
-}
-
-float Wall::getHeight(){
-	return this->height;
-}
-
-float Wall::getPositionX(){
-	return this->position_x;
-}
-
-float Wall::getPositionY(){
-	return this->position_y;
+void Wall::destroyImage(){
+	al_destroy_bitmap(this->imageName);
+	this->imageName = NULL;
+	this->position_y = this->position_x = -1;
 }

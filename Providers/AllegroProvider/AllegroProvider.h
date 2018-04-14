@@ -1,5 +1,7 @@
 #ifndef ALLEGROPROVIDER_H
 #define ALLEGROPROVIDER_H
+#include <allegro5/allegro.h>
+#include <allegro5/allegro_image.h>
 class AllegroProvider {
 /*----------------- File: AllegroProvider.h ---------------------+
 |DESCRICAO DO ARQUIVO 								  |
