@@ -15,7 +15,7 @@ class AllegroProvider {
 	public:
 		AllegroProvider();
 		void setDisplay(int,int);
-		ALLEGRO_DISPLAY* loadDisplay();
+		void loadDisplay();
 		void setBackgroundColor(int, int, int);
 		void destroyDisplay();
 };

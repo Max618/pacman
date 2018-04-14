@@ -18,6 +18,7 @@ Wall::~Wall(){
 }
 
 void Wall::setImage(char* filename,int x, int y){
+	al_init_image_addon();
 	this->imageName = al_load_bitmap(filename);
 	this->position_x = x;
 	this->position_y = y;

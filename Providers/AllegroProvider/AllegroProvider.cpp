@@ -17,7 +17,7 @@ void AllegroProvider::setDisplay(int width, int height){
 	this->height = height;
 }
 
-ALLEGRO_DISPLAY* AllegroProvider::loadDisplay(){
+void AllegroProvider::loadDisplay(){
 	this->display = al_create_display(this->width,this->height); 
 }
 
