@@ -26,7 +26,7 @@ int main(){
 
 	AllegroProvider al_p;
 	Wall h;
-	al_p.setDisplay(800,400);
+	al_p.setDisplay(1000,700);
 	al_p.loadDisplay();
 	al_p.setBackgroundColor(255,255,255);
 
@@ -48,7 +48,7 @@ int main(){
     }*/
 
 
-	h.setImage("Images/teste.png",10,50);
+	h.setImage("teste.png",10,50);
 	h.loadImage();
 	al_flip_display();//Atualiza o Buffer da Tela
    	al_rest(5); //Tempo que a tela fica ativa (em segundos)
