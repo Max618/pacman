@@ -52,13 +52,13 @@ int main(){
 
 	h.setImage("wall.png",1,1);
 	h.loadImage();
-  h2.setImage("wall.png", 33, 1);
+  h2.setImage("wall.png", 25, 1);
   h2.loadImage();
-  h3.setImage("wall.png", 1, 66);
+  h3.setImage("wall.png", 1, 50);
   h3.loadImage();
-  m.setImage("coin.png", 1, 33);
+  m.setImage("coin.png", 1, 25);
   m.loadImage();
-  m2.setImage("coin.png", 33, 33);
+  m2.setImage("coin.png", 25, 25);
   m2.loadImage();
 	al_flip_display();//Atualiza o Buffer da Tela
    	al_rest(5); //Tempo que a tela fica ativa (em segundos)

@@ -1,5 +1,5 @@
 #include<iostream>
-#include"Moeda.h"
+#include"Coin.h"
 #include<string.h>
 #include<stdio.h>
 #include <allegro5/allegro.h>
@@ -8,33 +8,33 @@
 
 using namespace std;
 
-Moeda::Moeda(){
+Coin::Coin(){
 	this->imageName = NULL;
 	this->position_x = this->position_y = -1;
 }
 
-Moeda::~Moeda(){
+Coin::~Coin(){
 	al_destroy_bitmap(this->imageName);
 	delete [] this->imageName;
 }
 
-void Moeda::setImage(char* filename,int x, int y){
+void Coin::setImage(char* filename,int x, int y){
 	al_init_image_addon();
 	this->imageName = al_load_bitmap(this->getPublic(filename));
 	this->position_x = x;
 	this->position_y = y;
 }
 
-void Moeda::loadImage(){
+void Coin::loadImage(){
 	al_draw_bitmap(this->imageName,this->position_x,this->position_y,0);
 }
-void Moeda::destroyImage(){
+void Coin::destroyImage(){
 	al_destroy_bitmap(this->imageName);
 	this->imageName = NULL;
 	this->position_y = this->position_x = -1;
 }
 
-char* Moeda::getPublic(char* filename){
+char* Coin::getPublic(char* filename){
 	char *file;
 	strcpy(file,"Images/");
 	strcat(file,filename);

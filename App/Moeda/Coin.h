@@ -1,10 +1,10 @@
-#ifndef MOEDA_H
-#define MOEDA_H
+#ifndef COIN_H
+#define COIN_H
 #include <allegro5/allegro.h>
 #include <allegro5/allegro_image.h>
 #include <stdio.h>
-class Moeda {
-/*----------------- File: Wall.h ---------------------+
+class Coin {
+/*----------------- File: Coin.h ---------------------+
 |DESCRICAO DO ARQUIVO 								  |
 | 													  |
 | 													  |
