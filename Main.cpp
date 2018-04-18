@@ -28,7 +28,7 @@ int main(){
 	AllegroProvider al_p;
 	Wall h;
   Moeda m;
-	al_p.setDisplay(1000,700);
+	al_p.setDisplay(700,700);
 	al_p.loadDisplay();
 	al_p.setBackgroundColor(255,255,255);
 
@@ -58,6 +58,6 @@ int main(){
    	al_rest(5); //Tempo que a tela fica ativa (em segundos)
    	al_p.destroyDisplay();
 	h.destroyImage();
-	printf("copilou");
+	printf("compilou");
 	return 0;
 }
