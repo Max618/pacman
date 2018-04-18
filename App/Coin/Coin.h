@@ -19,7 +19,7 @@ class Coin {
 		void loadImage();
 		void destroyImage();
 
-		Moeda();
-		~Moeda();
+		Coin();
+		~Coin();
 };
 #endif

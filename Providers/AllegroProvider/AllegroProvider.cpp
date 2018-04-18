@@ -28,3 +28,16 @@ void AllegroProvider::setBackgroundColor(int r,int g, int b){
 void AllegroProvider::destroyDisplay(){
 	al_destroy_display(this->display);
 }
+
+void AllegroProvider::loadImage(char* filename){
+	ALLEGRO_BITMAP  *image   = NULL;
+	image = al_load_bitmap(this->getPublic(filename));
+	al_draw_bitmap(image,0,0,0);
+}
+
+char* AllegroProvider::getPublic(char* filename){
+	char *file;
+	strcpy(file,"Images/");
+	strcat(file,filename);
+	return file;
+}
