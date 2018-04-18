@@ -46,7 +46,7 @@ int main(){
   Coin m,m2;
 	alP.setDisplay(800,600);
 	alP.loadDisplay();
-  alP.loadImage("b2.png");
+  alP.loadImage("background.jpg");
   al_flip_display();//Atualiza o Buffer da Tela
   al_rest(5); //Tempo que a tela fica ativa (em segundos)
   alP.destroyDisplay();
