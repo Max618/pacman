@@ -3,7 +3,7 @@
 #include<stdio.h>
 #include"Providers/AllegroProvider/AllegroProvider.h"
 #include"App/Wall/Wall.h"
-#include"App/Moeda/Moeda.h"
+#include"App/Coin/Coin.h"
 #include <allegro5/allegro.h>
 #include <allegro5/allegro_image.h>
 #include <allegro5/allegro_native_dialog.h>
@@ -27,7 +27,7 @@ int main(){
 
 	AllegroProvider al_p;
 	Wall h,h2,h3;
-  Moeda m,m2;
+  Coin m,m2;
 	al_p.setDisplay(800,600);
 	al_p.loadDisplay();
 	//al_p.setBackgroundColor(255,255,255);
@@ -44,7 +44,7 @@ int main(){
             }
             else
             {
-                al_draw_bitmap(moeda, j*TAM,i*TAM,0);
+                al_draw_bitmap(Coin, j*TAM,i*TAM,0);
             }
         }
     }*/
