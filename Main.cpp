@@ -22,8 +22,8 @@ int main(){
                           1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
                           1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
                           1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
-                          1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
-                          1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
+                          1,0,0,0,0,0,0,0,0,0,0,0,2,2,2,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
+                          1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
                           1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
                           1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
                           1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
@@ -42,30 +42,36 @@ int main(){
 
 
 	AllegroProvider alP;
-	Wall h,h2,h3;
-  Coin m,m2;
+	Wall h;
+  Coin c;
 	alP.setDisplay(800,600);
 	alP.loadDisplay();
   alP.loadImage("background.jpg");
-  al_flip_display();//Atualiza o Buffer da Tela
-  al_rest(5); //Tempo que a tela fica ativa (em segundos)
-  alP.destroyDisplay();
-
-	/*for(int i=0;i<10;i++)
+  h.setImage("wall.png");
+  c.setImage("coin.png");
+	for(int i=0;i<24;i++)
     {
-        for(int j=0;j<15;j++)
+        for(int j=0;j<32;j++)
         {
             if((matriz[i][j])==1)
             {
-                al_draw_bitmap(muro, j*TAM,i*TAM,0);
+              h.loadImage(j*25,i*25);
+                //al_draw_bitmap(muro, j*TAM,i*TAM,0);
  
+            }
+            else if((matriz[i][j])==2){
+
             }
             else
             {
-                al_draw_bitmap(Coin, j*TAM,i*TAM,0);
+                c.loadImage(j*25,i*25);
             }
         }
-    }*/
+    }
+
+  al_flip_display();//Atualiza o Buffer da Tela
+  al_rest(5); //Tempo que a tela fica ativa (em segundos)
+  alP.destroyDisplay();
 
 
 	/*h.setImage("wall.png",1,1);
