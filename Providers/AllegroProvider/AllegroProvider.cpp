@@ -26,6 +26,8 @@ void AllegroProvider::setBackgroundColor(int r,int g, int b){
 }
 
 void AllegroProvider::destroyDisplay(){
+	al_flip_display();//Atualiza o Buffer da Tela
+  	al_rest(5); //Tempo que a tela fica ativa (em segundos)
 	al_destroy_display(this->display);
 }
 

@@ -18,16 +18,16 @@ Coin::~Coin(){
 	delete [] this->imageName;
 }
 
-void Coin::setImage(char* filename){
+/*void Coin::setImage(char* filename){
 	al_init_image_addon();
 	this->imageName = al_load_bitmap(this->getPublic(filename));
 }
 
 void Coin::loadImage(int x, int y){
 	al_draw_bitmap(this->imageName,x,y,0);
-}
+}*/
 
-/*void Coin::setImage(char* filename, int x, int y){
+void Coin::setImage(char* filename, int x, int y){
 	al_init_image_addon();
 	this->imageName = al_load_bitmap(this->getPublic(filename));
 	this->position_x = x;
@@ -36,7 +36,7 @@ void Coin::loadImage(int x, int y){
 
 void Coin::loadImage(){
 	al_draw_bitmap(this->imageName,this->position_x,this->position_y,0);
-}*/
+}
 
 void Coin::destroyImage(){
 	al_destroy_bitmap(this->imageName);

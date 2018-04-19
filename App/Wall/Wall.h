@@ -15,12 +15,12 @@ class Wall {
 		int position_x, position_y;
 		char* getPublic(char*);
 	public:
-		void setImage(char*);
-		void loadImage(int, int);
+		/*void setImage(char*);
+		void loadImage(int, int);*/
 		void destroyImage();
 
-		/*void setImage(char*, int, int);
-		void loadImage();*/
+		void setImage(char*, int, int);
+		void loadImage();
 
 		Wall();
 		~Wall();

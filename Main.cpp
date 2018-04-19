@@ -41,7 +41,7 @@ int main(){
   
 
 
-	AllegroProvider alP;
+	/*AllegroProvider alP;
 	Wall h;
   Coin c;
 	alP.setDisplay(800,600);
@@ -63,31 +63,61 @@ int main(){
         }
     }
 
-  al_flip_display();//Atualiza o Buffer da Tela
-  al_rest(5); //Tempo que a tela fica ativa (em segundos)
   alP.destroyDisplay();
+  h.destroyImage();
+  c.destroyImage();*/
 
-  /*Parte para entregar
-    COM ALOCACAO DINAMICA
+  //Parte para entregar
+  //COM ALOCACAO DINAMICA
 
-  AllegroProvider *alP;
-  alP = new AllegroProvider;
+  AllegroProvider *alP = new AllegroProvider;
   alP->setDisplay(800,600);
+  alP->loadDisplay();
   alP->loadImage("background.jpg");
 
-  Wall *wall;
-  wall = new Wall[253];
-  Coin *coin;
-  coin = new Coin[481];
+  Wall *wall = new Wall[253];
+  Coin *coin = new Coin[481];
+  int w = 0, c = 0;
 
   for(int i = 0; i < 24; i++){
-    if(i == 0 || i == 23){
-      wall[i].setImage("wall.png",0,25*i);
+    for(int j = 0; j < 32; j++){
+      if((matriz[i][j]) == 1){
+        wall[w++].setImage("wall.png",j*25,i*25);
+        printf("aqui\n");
+      }
+      else if((matriz[i][j]) == 0){
+        coin[c++].setImage("coin.png",j*25,i*25);
+      }
     }
-    elseif(){
+  }
 
-    }
-  }*/
+  //for(int i = 0; i < 768; i++){
+  //  wall[i].loadImage();
+  //  coin[i].loadImage();
+  //}
+
+  for(int i = 0; i < 253; i++){
+    wall[i].loadImage();
+  }
+
+  for(int i = 0; i < 481; i++){
+    coin[i].loadImage();
+  }
+
+  al_flip_display();//Atualiza o Buffer da Tela
+  al_rest(5); //Tempo que a tela fica ativa (em segundos)
+  alP->destroyDisplay();
+  for(int i = 0; i < 253; i++){
+    wall[i].destroyImage();
+  }
+
+  for(int i = 0; i < 481; i++){
+    coin[i].destroyImage();
+  }
+
+  delete [] alP;
+  delete [] wall;
+  delete [] coin;
   
 
 	return 0;
