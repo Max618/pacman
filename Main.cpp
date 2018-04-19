@@ -55,16 +55,10 @@ int main(){
         {
             if((matriz[i][j])==1)
             {
-              h.loadImage(j*25,i*25);
-                //al_draw_bitmap(muro, j*TAM,i*TAM,0);
- 
+              h.loadImage(j*25,i*25); 
             }
-            else if((matriz[i][j])==2){
-
-            }
-            else
-            {
-                c.loadImage(j*25,i*25);
+            else if((matriz[i][j])==0){
+              c.loadImage(j*25,i*25);
             }
         }
     }
@@ -73,21 +67,28 @@ int main(){
   al_rest(5); //Tempo que a tela fica ativa (em segundos)
   alP.destroyDisplay();
 
+  /*Parte para entregar
+    COM ALOCACAO DINAMICA
 
-	/*h.setImage("wall.png",1,1);
-	h.loadImage();
-  h2.setImage("wall.png", 25, 1);
-  h2.loadImage();
-  h3.setImage("wall.png", 1, 50);
-  h3.loadImage();
-  m.setImage("coin.png", 1, 25);
-  m.loadImage();
-  m2.setImage("coin.png", 25, 25);
-  m2.loadImage();
-	al_flip_display();//Atualiza o Buffer da Tela
-   	al_rest(5); //Tempo que a tela fica ativa (em segundos)
-   	al_p.destroyDisplay();
-	h.destroyImage();*/
-	printf("compilou");
+  AllegroProvider *alP;
+  alP = new AllegroProvider;
+  alP->setDisplay(800,600);
+  alP->loadImage("background.jpg");
+
+  Wall *wall;
+  wall = new Wall[253];
+  Coin *coin;
+  coin = new Coin[481];
+
+  for(int i = 0; i < 24; i++){
+    if(i == 0 || i == 23){
+      wall[i].setImage("wall.png",0,25*i);
+    }
+    elseif(){
+
+    }
+  }*/
+  
+
 	return 0;
 }
