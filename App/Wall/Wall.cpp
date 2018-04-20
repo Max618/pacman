@@ -18,18 +18,9 @@ Wall::~Wall(){
 	//delete [] this->imageName;
 }
 
-/*void Wall::setImage(char* filename){
+void Wall::setPositions(int x, int y){
 	al_init_image_addon();
-	this->imageName = al_load_bitmap(this->getPublic(filename));
-}
-
-void Wall::loadImage(int x, int y){
-	al_draw_bitmap(this->imageName,x,y,0);
-}*/
-
-void Wall::setImage(char* filename, int x, int y){
-	al_init_image_addon();
-	this->imageName = al_load_bitmap(this->getPublic(filename));
+	this->imageName = al_load_bitmap("Images/wall.png");
 	this->position_x = x;
 	this->position_y = y;
 }
@@ -42,11 +33,4 @@ void Wall::destroyImage(){
 	al_destroy_bitmap(this->imageName);
 	this->imageName = NULL;
 	this->position_y = this->position_x = -1;
-}
-
-char* Wall::getPublic(char* filename){
-	char *file;
-	strcpy(file,"Images/");
-	strcat(file,filename);
-	return file;
 }
