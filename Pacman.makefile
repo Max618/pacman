@@ -17,6 +17,9 @@ Wall.o: App/Wall/Wall.h App/Wall/Wall.cpp
 Coin.o: App/Coin/Coin.h App/Coin/Coin.cpp
 	g++ -c App/Coin/Coin.cpp $(ALLEGRO_INCLUDE) $(ALLEGRO_FLAGS)
 
+Character.o: App/Character/Character.h App/Character/Character.cpp
+	g++ -c App/Character/Character.cpp $(ALLEGRO_INCLUDE) $(ALLEGRO_FLAGS)
+
 clean:
 	rm *.o
 	rm Pacman.exe 

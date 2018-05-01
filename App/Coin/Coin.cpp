@@ -15,7 +15,7 @@ Coin::Coin(){
 
 Coin::~Coin(){
 	al_destroy_bitmap(this->imageName);
-	delete [] this->imageName;
+	// delete [] this->imageName;
 }
 
 void Coin::setPositions(int x, int y){
