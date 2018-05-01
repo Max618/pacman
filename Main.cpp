@@ -83,5 +83,5 @@ int main(){
   delete [] coin;
   
 
-	return 0;
+  return 0;
 }
