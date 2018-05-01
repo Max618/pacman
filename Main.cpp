@@ -4,6 +4,7 @@
 #include"Providers/AllegroProvider/AllegroProvider.h"
 #include"App/Wall/Wall.h"
 #include"App/Coin/Coin.h"
+#include"App/Character/Character.h"
 #include <allegro5/allegro.h>
 #include <allegro5/allegro_image.h>
 #include <allegro5/allegro_native_dialog.h>
@@ -25,7 +26,7 @@ int main(){
                           1,0,1,0,0,0,0,1,0,0,0,1,2,2,2,2,2,2,2,2,1,0,0,0,1,0,0,0,0,1,0,1,
                           1,0,1,0,0,1,0,1,0,1,0,1,2,1,1,2,2,1,1,2,1,0,1,0,1,0,1,0,0,1,0,1,
                           1,0,0,0,0,1,0,1,0,1,0,1,2,1,2,2,2,2,1,2,1,0,1,0,1,0,1,0,0,0,0,1,
-                          1,0,1,0,0,1,0,1,0,1,0,1,2,1,2,2,2,2,1,2,1,0,1,0,1,0,1,0,0,1,0,1,
+                          1,0,1,0,0,1,0,1,0,1,0,1,2,1,2,2,3,2,1,2,1,0,1,0,1,0,1,0,0,1,0,1,
                           1,0,1,0,0,1,0,1,0,1,0,1,2,1,1,1,1,1,1,2,1,0,1,0,1,0,1,0,0,1,0,1,
                           1,0,1,0,0,1,0,0,0,1,0,0,2,2,2,2,2,2,2,2,0,0,1,0,0,0,1,0,0,1,0,1,
                           1,0,1,0,1,1,1,1,1,1,1,1,1,1,1,0,0,1,1,1,1,1,1,1,1,1,1,1,0,1,0,1,
@@ -47,8 +48,9 @@ int main(){
 
   Wall *wall = new Wall[360];
   Coin *coin = new Coin[374];
+  Character *character = new Character[1];
 
-  int w = 0, c = 0;
+  int w = 0, c = 0, ch = 0;
 
   for(int i = 0; i < 24; i++){
     for(int j = 0; j < 32; j++){
@@ -57,6 +59,9 @@ int main(){
       }
       else if((matriz[i][j]) == 0){
         coin[c++].setPositions(j*25,i*25);
+      }
+      else if((matriz[i][j]) == 3){
+        character[ch++].setPositions(j*25,i*25);
       }
     }
   }
@@ -69,6 +74,10 @@ int main(){
     coin[i].loadImage();
   }
 
+  for(int i = 0; i < 1; i++){
+    character[i].loadImage();
+  }
+
   alP->destroyDisplay();
   for(int i = 0; i < 360; i++){
     wall[i].destroyImage();
@@ -78,9 +87,14 @@ int main(){
     coin[i].destroyImage();
   }
 
+  for(int i = 0; i < 1; i++){
+    character[i].destroyImage();
+  }
+
   delete [] alP;
   delete [] wall;
   delete [] coin;
+  delete [] character;
   
 
   return 0;

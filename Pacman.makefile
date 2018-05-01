@@ -2,8 +2,8 @@ ALLEGRO_FLAGS=-L/usr/local/lib -lallegro `pkg-config --libs allegro-5 allegro_au
 
 ALLEGRO_INCLUDE= -I/usr/local/include/allegro5
 
-all: AllegroProvider.o Wall.o Main.o Coin.o
-	g++ AllegroProvider.o Wall.o Main.o Coin.o -o Pacman.exe $(ALLEGRO_INCLUDE) $(ALLEGRO_FLAGS)
+all: AllegroProvider.o Wall.o Main.o Coin.o Character.o
+	g++ AllegroProvider.o Wall.o Main.o Coin.o Character.o -o Pacman.exe $(ALLEGRO_INCLUDE) $(ALLEGRO_FLAGS)
 
 Main.o: Main.cpp
 	g++ -c Main.cpp $(ALLEGRO_INCLUDE) $(ALLEGRO_FLAGS)

@@ -15,7 +15,7 @@ Character::Character(){
 
 Character::~Character(){
 	al_destroy_bitmap(this->imageName);
-	delete [] this->imageName;
+	// delete [] this->imageName;
 }
 
 void Character::setPositions(int x, int y){
