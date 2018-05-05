@@ -3,8 +3,6 @@
 #include <allegro5/allegro.h>
 #include <allegro5/allegro_image.h>
 #include <allegro5/allegro_native_dialog.h>
-#include <allegro5/allegro_acodec.h>
-#include <allegro5/allegro_audio.h>
 class AllegroProvider {
 /*----------------- File: AllegroProvider.h ---------------------+
 |DESCRICAO DO ARQUIVO 								  |
@@ -15,11 +13,8 @@ class AllegroProvider {
 	private:
 		int width, height, matrix[24][32];
 		ALLEGRO_DISPLAY *display; //Tela
-		ALLEGRO_EVENT_QUEUE *event_queue; //Fila de Eventos
-		ALLEGRO_TIMER *timer; //Timer
 		char* getPublic(char*);
-
-		void startEvents();
+		ALLEGRO_EVENT_QUEUE *events;
 	public:
 		AllegroProvider();
 		void setDisplay(int,int);
@@ -27,5 +22,8 @@ class AllegroProvider {
 		void setBackgroundColor(int, int, int);
 		void destroyDisplay();
 		void loadImage(char*);
+
+		void setEvents();
+		ALLEGRO_EVENT_QUEUE* getEvents();
 };
 #endif

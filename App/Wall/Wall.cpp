@@ -26,7 +26,7 @@ void Wall::setPositions(int x, int y){
 }
 
 void Wall::loadImage(){
-	al_draw_bitmap(this->imageName,this->position_x,this->position_y,0);
+	al_draw_bitmap_region(this->imageName, 0, 0, 25, 25, this->position_x,this->position_y,0);
 }
 
 void Wall::destroyImage(){

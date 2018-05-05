@@ -2,6 +2,9 @@
 #define CHARACTER_H
 #include <allegro5/allegro.h>
 #include <allegro5/allegro_image.h>
+#include "allegro5/allegro_audio.h"
+#include "allegro5/allegro_acodec.h"
+#include <allegro5/allegro_native_dialog.h>
 #include <stdio.h>
 class Character {
 /*----------------- File: Character.h ---------------------+
@@ -13,10 +16,20 @@ class Character {
 	private:
 		ALLEGRO_BITMAP* imageName;
 		int position_x, position_y;
+		ALLEGRO_EVENT event;
+		
 	public:
 		void destroyImage();
 		void setPositions(int, int);
 		void loadImage();
+		void waitEvent(ALLEGRO_EVENT_QUEUE*);
+		void getKeyDown(bool*);
+		void getKeyUp(bool*);
+		bool eventKeyDown();
+		bool eventKeyUp();
+		bool eventCloseDisplay();
+
+		void move(bool*);
 
 		Character();
 		~Character();

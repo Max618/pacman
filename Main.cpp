@@ -14,6 +14,7 @@ using namespace std;
 
 int main(){
 
+    bool vet[5]= {false}, exit = false;
     int matriz[24][32] = {
                           1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
                           1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
@@ -41,12 +42,12 @@ int main(){
                           1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1
                           };
 
-
+  //STARTA O JOGO
   AllegroProvider *alP = new AllegroProvider;
   alP->setDisplay(800,600);
   alP->loadDisplay();
   alP->loadImage("background.jpg");
-
+  alP->setEvents();
 
   /*
   ALLEGRO_DISPLAY *display = NULL;
@@ -106,13 +107,14 @@ int main(){
   al_destroy_display(display);
 
 */
-
+  //CRIA OBJETOS
   Wall *wall = new Wall[360];
   Coin *coin = new Coin[374];
-  Character *character = new Character[1];
-
+  Character *character = new Character;
   int w = 0, c = 0, ch = 0;
 
+
+  //SETA POSICAO DAS IMAGENS
   for(int i = 0; i < 24; i++){
     for(int j = 0; j < 32; j++){
       if((matriz[i][j]) == 1){
@@ -127,6 +129,7 @@ int main(){
     }
   }
 
+  //DESENHA IMAGENS
   for(int i = 0; i < 360; i++){
     wall[i].loadImage();
   }
@@ -139,6 +142,25 @@ int main(){
     character[i].loadImage();
   }
 
+  //EVENTOS DO TECLADO PARA ANDAR
+  while(!exit){
+    character->waitEvent(alP->getEvents());
+    if(character->eventKeyDown()){
+      character->getKeyDown(vet);
+      if(vet[4])
+        exit = true;
+    }
+    if(character->eventKeyUp()){
+      character->getKeyUp(vet);
+    }
+    else if(character->eventCloseDisplay()){
+      exit = true;
+    }
+    character->move(vet);
+  }
+
+
+  //DESTROI O JOGO
   alP->destroyDisplay();
   for(int i = 0; i < 360; i++){
     wall[i].destroyImage();

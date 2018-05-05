@@ -19,6 +19,7 @@ Character::~Character(){
 }
 
 void Character::setPositions(int x, int y){
+	al_install_keyboard();
 	al_init_image_addon();
 	this->imageName = al_load_bitmap("Images/garuleft.png");
 	this->position_x = x;
@@ -33,4 +34,79 @@ void Character::destroyImage(){
 	al_destroy_bitmap(this->imageName);
 	this->imageName = NULL;
 	this->position_y = this->position_x = -1;
+}
+
+void Character::waitEvent(ALLEGRO_EVENT_QUEUE* fila_eventos){
+	al_wait_for_event(fila_eventos,&(this->event));
+}
+
+void Character::getKeyDown(bool vet[]){
+	switch((this->event).keyboard.keycode){
+		case ALLEGRO_KEY_UP:
+			vet[0] = true;
+		break;
+		case ALLEGRO_KEY_DOWN:
+			vet[1] = true;
+		break;
+		case ALLEGRO_KEY_LEFT:
+			vet[2] = true;
+		break;
+		case ALLEGRO_KEY_RIGHT:
+			vet[3] = true;
+		break;
+		case ALLEGRO_KEY_ESCAPE:
+			vet[4] = true;
+	}
+}
+
+bool Character::eventKeyDown(){
+	return ((this->event).type == ALLEGRO_EVENT_KEY_DOWN);
+}
+
+bool Character::eventKeyUp(){
+	return ((this->event).type == ALLEGRO_EVENT_KEY_UP);
+}
+
+bool Character::eventCloseDisplay(){
+	return ((this->event).type == ALLEGRO_EVENT_DISPLAY_CLOSE);
+}
+
+void Character::getKeyUp(bool vet[]){
+	switch((this->event).keyboard.keycode){
+		case ALLEGRO_KEY_UP:
+			vet[0] = false;
+		break;
+		case ALLEGRO_KEY_DOWN:
+			vet[1] = false;
+		break;
+		case ALLEGRO_KEY_LEFT:
+			vet[2] = false;
+		break;
+		case ALLEGRO_KEY_RIGHT:
+			vet[3] = false;
+		break;
+		case ALLEGRO_KEY_ESCAPE:
+			vet[4] = false;
+	}
+}
+
+void Character::move(bool vet[]){
+	if(vet[0]==true && this->position_y>0){
+		this->setPositions(this->position_x,(this->position_y-25));
+		printf("UP X: %d - Y: %d\n", this->position_x, this->position_y);
+	}
+	if(vet[1]==true && this->position_y<600){
+		this->setPositions(this->position_x,(this->position_y+25));
+		printf("DOWN X: %d - Y: %d\n", this->position_x, this->position_y);
+	}
+	if(vet[2]==true && this->position_x>0){
+		this->setPositions((this->position_x-25),this->position_y);
+		printf("LEFT X: %d - Y: %d\n", this->position_x, this->position_y);
+	}
+	if(vet[3]==true && this->position_x<800){
+		this->setPositions((this->position_x+25),this->position_y);
+		printf("RIGHT X: %d - Y: %d\n", this->position_x, this->position_y);
+	}
+	this->loadImage();
+    al_flip_display();
 }
