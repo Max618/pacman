@@ -150,7 +150,7 @@ int main(){
       if(vet[4])
         exit = true;
     }
-    if(character->eventKeyUp()){
+    else /*if(character->eventKeyUp())*/{
       character->getKeyUp(vet);
     }
     if(character->eventCloseDisplay()){

@@ -121,4 +121,44 @@ void Character::move(bool vet[]){
 	}
 	this->loadImage();
     al_flip_display();
+    /*if(vet[0]){
+    	while(this->position_y>0){
+    		this->position_y -= 25 * vet[0];
+			printf("UP X: %d - Y: %d\n", this->position_x, this->position_y);
+			this->loadImage();
+    		al_flip_display();
+    		al_clear_to_color(al_map_rgb(0,0,0));
+    	}
+    	//vet[0] = false;
+    }
+    else if(vet[1]){
+    	while(this->position_y<600){
+    		this->position_y +=  25 * vet[1];
+			printf("DOWN X: %d - Y: %d\n", this->position_x, this->position_y);
+			this->loadImage();
+    		al_flip_display();
+    		al_clear_to_color(al_map_rgb(0,0,0));
+    	}
+    	//vet[1] = false;
+    }
+    else if(vet[2]){
+    	while(this->position_x>0){
+    		this->position_x -= 25 * vet[2];
+			printf("LEFT X: %d - Y: %d\n", this->position_x, this->position_y);
+			this->loadImage();
+    		al_flip_display();
+    		al_clear_to_color(al_map_rgb(0,0,0));
+    	}
+    	//vet[2] = false;
+    }
+    else if(vet[3]){
+    	while(this->position_x<800){
+    		this->position_x += 25 * vet[3];
+			printf("RIGHT X: %d - Y: %d\n", this->position_x, this->position_y);
+			this->loadImage();
+    		al_flip_display();
+    		al_clear_to_color(al_map_rgb(0,0,0));
+    	}
+    	//vet[3] = false;
+    }*/
 }
