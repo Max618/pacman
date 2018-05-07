@@ -91,21 +91,33 @@ void Character::getKeyUp(bool vet[]){
 }
 
 void Character::move(bool vet[]){
-	if(vet[0]==true && this->position_y>0){
-		this->setPositions(this->position_x,(this->position_y-25));
+	if(vet[0] && this->position_y>0){
+		this->position_y -= 25 * vet[0];
 		printf("UP X: %d - Y: %d\n", this->position_x, this->position_y);
+		for(int i = 0; i < 4; i++){
+			printf("vet[%d]: %d\n", i, vet[i]);
+		}
 	}
-	if(vet[1]==true && this->position_y<600){
-		this->setPositions(this->position_x,(this->position_y+25));
+	else if(vet[1] && this->position_y<600){
+		this->position_y +=  25 * vet[1];
 		printf("DOWN X: %d - Y: %d\n", this->position_x, this->position_y);
+		for(int i = 0; i < 4; i++){
+			printf("vet[%d]: %d\n", i, vet[i]);
+		}
 	}
-	if(vet[2]==true && this->position_x>0){
-		this->setPositions((this->position_x-25),this->position_y);
+	else if(vet[2] && this->position_x>0){
+		this->position_x -= 25 * vet[2];
 		printf("LEFT X: %d - Y: %d\n", this->position_x, this->position_y);
+		for(int i = 0; i < 4; i++){
+			printf("vet[%d]: %d\n", i, vet[i]);
+		}
 	}
-	if(vet[3]==true && this->position_x<800){
-		this->setPositions((this->position_x+25),this->position_y);
+	else if(vet[3] && this->position_x<800){
+		this->position_x += 25 * vet[3];
 		printf("RIGHT X: %d - Y: %d\n", this->position_x, this->position_y);
+		for(int i = 0; i < 4; i++){
+			printf("vet[%d]: %d\n", i, vet[i]);
+		}
 	}
 	this->loadImage();
     al_flip_display();

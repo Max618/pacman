@@ -44,7 +44,7 @@ int main(){
 
   //STARTA O JOGO
   AllegroProvider *alP = new AllegroProvider;
-  alP->setDisplay(800,600);
+  alP->setDisplay(900,700);
   alP->loadDisplay();
   alP->loadImage("background.jpg");
   alP->setEvents();
@@ -153,7 +153,7 @@ int main(){
     if(character->eventKeyUp()){
       character->getKeyUp(vet);
     }
-    else if(character->eventCloseDisplay()){
+    if(character->eventCloseDisplay()){
       exit = true;
     }
     character->move(vet);
