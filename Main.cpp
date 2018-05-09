@@ -92,64 +92,6 @@ int main(){
   alP->loadImage("background.jpg");
   alP->setEvents();
 
-  /*
-  ALLEGRO_DISPLAY *display = NULL;
-  ALLEGRO_EVENT_QUEUE *event_queue = NULL;
-
-  if(!al_init())
-    return -1;
-
-  display = al_create_display(wid, hei);
-  display = al_draw_bitmap(mapa,0,0,0);
-
-  if(!display)
-    return -1;
-  
-
-  al_init_primitives_addon();
-  al_install_keyboard();
-
-  event_queue = al_create_event_queue();
-
-  al_register_event_source(event_queue, al_get_keyboard_event_source());
-  
-  while(!done)
-  {
-    ALLEGRO_EVENT ev;
-    al_wait_for_event(event_queue, &ev);
-    if(ev.type == ALLEGRO_EVENT_KEY_DOWN)
-    {
-      switch(ev.keyboard.keycode)
-      {
-      case ALLEGRO_KEY_UP:
-        pos_y -= 10;
-        break;
-      case ALLEGRO_KEY_DOWN:
-        pos_y += 10;
-        break;
-      case ALLEGRO_KEY_LEFT:
-        pos_x -= 10;
-        break;
-      case ALLEGRO_KEY_RIGHT:
-        pos_x += 10;
-        break;
-      }
-    }
-    else if(ev.type == ALLEGRO_EVENT_KEY_UP)
-    {
-      if(ev.keyboard.keycode == ALLEGRO_KEY_ESCAPE)
-        done = true;
-    }
-
-     
-      al_flip_display();
-      al_clear_to_color(al_map_rgb(0,0,0));
-  }
-
- 
-  al_destroy_display(display);
-
-*/
   //CRIA OBJETOS
   Wall *wall = new Wall[360];
   Coin *coin = new Coin[374];
