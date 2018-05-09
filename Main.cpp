@@ -12,6 +12,49 @@
 
 using namespace std;
 
+
+bool haveWall(int x, int y, bool vet[], Wall wall[])
+  {
+      if(vet[0])
+      {
+        for (int i=0; i < 360; i++)
+        {
+          if(wall[i].getPositionX() == x && wall[i].getPositionY() == y-25)
+            return true;
+        }
+      }
+
+      if(vet[1])
+      {
+        for (int i=0; i < 360; i++)
+        {
+          if(wall[i].getPositionX() == x && wall[i].getPositionY() == y+25)
+            return true;
+        }
+      }
+
+      if(vet[2])
+      {
+        for (int i=0; i < 360; i++)
+        {
+          if(wall[i].getPositionY() == y && wall[i].getPositionX() == x-25)
+            return true;
+        }
+      }
+
+      if(vet[3])
+      {
+        for (int i=0; i < 360; i++)
+        {
+          if(wall[i].getPositionY() == y && wall[i].getPositionX() == x+25)
+            return true;
+        }
+      }
+
+      return false;
+
+  }
+
 int main(){
 
     bool vet[5]= {false}, exit = false;
@@ -156,7 +199,10 @@ int main(){
     if(character->eventCloseDisplay()){
       exit = true;
     }
-    character->move(vet);
+
+    if(!haveWall(character->getPositionX(), character->getPositionY(), vet, wall))
+      character->move(vet);
+      
   }
 
 

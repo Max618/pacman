@@ -21,6 +21,8 @@ class Character {
 	public:
 		void destroyImage();
 		void setPositions(int, int);
+		int getPositionX();
+		int getPositionY();
 		void loadImage();
 		void waitEvent(ALLEGRO_EVENT_QUEUE*);
 		void getKeyDown(bool*);

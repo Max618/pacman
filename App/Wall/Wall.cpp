@@ -25,6 +25,14 @@ void Wall::setPositions(int x, int y){
 	this->position_y = y;
 }
 
+int Wall::getPositionX(){
+	return position_x;
+}
+
+int Wall::getPositionY(){
+	return position_y;
+}
+
 void Wall::loadImage(){
 	al_draw_bitmap_region(this->imageName, 0, 0, 25, 25, this->position_x,this->position_y,0);
 }

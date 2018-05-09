@@ -26,6 +26,15 @@ void Character::setPositions(int x, int y){
 	this->position_y = y;
 }
 
+int Character::getPositionX(){
+	return position_x;
+}
+
+int Character::getPositionY(){
+	return position_y;
+}
+
+
 void Character::loadImage(){
 	al_draw_bitmap_region(this->imageName, 0, 0, 25, 25, this->position_x,this->position_y,0);
 }
@@ -89,6 +98,7 @@ void Character::getKeyUp(bool vet[]){
 			vet[4] = false;
 	}
 }
+
 
 void Character::move(bool vet[]){
 	if(vet[0] && this->position_y>0){

@@ -16,6 +16,8 @@ class Wall {
 	public:
 		void destroyImage();
 		void setPositions(int, int);
+		int getPositionX();
+		int getPositionY();
 		void loadImage();
 
 		Wall();
