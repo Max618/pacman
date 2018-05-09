@@ -8,6 +8,8 @@
 
 using namespace std;
 
+
+
 Character::Character(){
 	this->imageName = NULL;
 	this->position_x = this->position_y = -1;
@@ -129,8 +131,11 @@ void Character::move(bool vet[]){
 			printf("vet[%d]: %d\n", i, vet[i]);
 		}
 	}
-	this->loadImage();
-    al_flip_display();
+
+			al_clear_to_color(al_map_rgb(0,0,0));
+			this->loadImage();
+			al_flip_display();
+
     /*if(vet[0]){
     	while(this->position_y>0){
     		this->position_y -= 25 * vet[0];

@@ -20,6 +20,7 @@ void AllegroProvider::setDisplay(int width, int height){
 
 void AllegroProvider::loadDisplay(){
 	this->display = al_create_display(this->width,this->height); 
+
 }
 
 void AllegroProvider::setBackgroundColor(int r,int g, int b){

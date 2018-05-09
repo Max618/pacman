@@ -202,7 +202,10 @@ int main(){
 
     if(!haveWall(character->getPositionX(), character->getPositionY(), vet, wall))
       character->move(vet);
-      
+
+
+
+
   }
 
 
