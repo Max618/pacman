@@ -13,9 +13,27 @@
 
 using namespace std;
 
+void rewrite(Wall wall[],Coin coin[],Character character[]){
+    //DESENHA IMAGENS
+    for(int i = 0; i < 360; i++){
+      wall[i].loadImage();
+    }
+
+    for(int i = 0; i < 374; i++){
+      coin[i].loadImage();
+    }
+
+    //DESENHA CHARACTER
+    for(int i = 0; i < 1; i++){
+      character[i].loadImage();
+    }
+    al_flip_display();
+    al_draw_bitmap(al_load_bitmap("Images/background.jpg"),0,0,0);
+}
+
 int main(){
 
-    bool vet[5]= {false}, exit = false;
+    bool vet[5]= {false}, exit = false, reWrite = true;
     int matriz[24][32] = {
                           1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
                           1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
@@ -45,7 +63,7 @@ int main(){
 
   //STARTA O JOGO
   AllegroProvider *alP = new AllegroProvider;
-  alP->setDisplay(900,700);
+  alP->setDisplay(1200,600);
   alP->loadDisplay();
   alP->loadImage("background.jpg");
   alP->setEvents();
@@ -93,7 +111,7 @@ int main(){
           vet[4] = true;
       }
     }
-    else /*if(character->eventKeyUp())*/{
+    else if(character->eventKeyUp()){
       switch(character->getEvent().keyboard.keycode){
         case ALLEGRO_KEY_UP:
           vet[0] = false;
@@ -116,40 +134,36 @@ int main(){
       //exit(1);
     }
 
-
-
-    if(vet[0] && matriz[character->getPositionY()/25-1][character->getPositionX()/25] != 1){
-      character->setPositions(character->getPositionX(),character->getPositionY()-25);
-    }
-    else if(vet[1] && matriz[character->getPositionY()/25+1][character->getPositionX()/25] != 1){
-
-      character->setPositions(character->getPositionX(),character->getPositionY()+25);
-    }
-    else if(vet[2] && matriz[character->getPositionY()/25][character->getPositionX()/25-1] != 1){
-
-      character->setPositions(character->getPositionX()-25,character->getPositionY());
-    }
-    else if(vet[3] && matriz[character->getPositionY()/25][character->getPositionX()/25+1] != 1){
-
-      character->setPositions(character->getPositionX()+25,character->getPositionY());
+    if(vet[0]){
+      while(matriz[character->getPositionY()/25-1][character->getPositionX()/25] != 1){
+        character->setPositions(character->getPositionX(),character->getPositionY()-25);
+        rewrite(wall,coin,character);
+      }
     }
 
-    //DESENHA IMAGENS
-    for(int i = 0; i < 360; i++){
-      wall[i].loadImage();
+    if(vet[1]){
+      while(matriz[character->getPositionY()/25+1][character->getPositionX()/25] != 1){
+        character->setPositions(character->getPositionX(),character->getPositionY()+25);
+        rewrite(wall,coin,character);
+      }
     }
 
-    for(int i = 0; i < 374; i++){
-      coin[i].loadImage();
+    if(vet[2]){
+      while(matriz[character->getPositionY()/25][character->getPositionX()/25-1] != 1){
+        character->setPositions(character->getPositionX()-25,character->getPositionY());
+        rewrite(wall,coin,character);
+      }
     }
 
-    //DESENHA CHARACTER
-    for(int i = 0; i < 1; i++){
-      character[i].loadImage();
+    if(vet[3]){
+      while(matriz[character->getPositionY()/25][character->getPositionX()/25+1] != 1){
+        character->setPositions(character->getPositionX()+25,character->getPositionY());
+        rewrite(wall,coin,character);
+      }
     }
-    al_flip_display();
-    al_draw_bitmap(al_load_bitmap("Images/background.jpg"),0,0,0);
-    
+
+
+
   }
 
 
