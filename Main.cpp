@@ -1,6 +1,7 @@
 #include<iostream>
 #include<string.h>
 #include<stdio.h>
+#include<stdlib.h>
 #include"Providers/AllegroProvider/AllegroProvider.h"
 #include"App/Wall/Wall.h"
 #include"App/Coin/Coin.h"
@@ -11,49 +12,6 @@
 #include <allegro5/allegro_native_dialog.h>
 
 using namespace std;
-
-
-bool haveWall(int x, int y, bool vet[], Wall wall[])
-  {
-      if(vet[0])
-      {
-        for (int i=0; i < 360; i++)
-        {
-          if(wall[i].getPositionX() == x && wall[i].getPositionY() == y-25)
-            return true;
-        }
-      }
-
-      if(vet[1])
-      {
-        for (int i=0; i < 360; i++)
-        {
-          if(wall[i].getPositionX() == x && wall[i].getPositionY() == y+25)
-            return true;
-        }
-      }
-
-      if(vet[2])
-      {
-        for (int i=0; i < 360; i++)
-        {
-          if(wall[i].getPositionY() == y && wall[i].getPositionX() == x-25)
-            return true;
-        }
-      }
-
-      if(vet[3])
-      {
-        for (int i=0; i < 360; i++)
-        {
-          if(wall[i].getPositionY() == y && wall[i].getPositionX() == x+25)
-            return true;
-        }
-      }
-
-      return false;
-
-  }
 
 int main(){
 
@@ -114,40 +72,84 @@ int main(){
     }
   }
 
-  //DESENHA IMAGENS
-  for(int i = 0; i < 360; i++){
-    wall[i].loadImage();
-  }
-
-  for(int i = 0; i < 374; i++){
-    coin[i].loadImage();
-  }
-
-  for(int i = 0; i < 1; i++){
-    character[i].loadImage();
-  }
-
   //EVENTOS DO TECLADO PARA ANDAR
   while(!exit){
     character->waitEvent(alP->getEvents());
     if(character->eventKeyDown()){
-      character->getKeyDown(vet);
-      if(vet[4])
-        exit = true;
+      switch(character->getEvent().keyboard.keycode){
+        case ALLEGRO_KEY_UP:
+          vet[0] = true;
+        break;
+        case ALLEGRO_KEY_DOWN:
+          vet[1] = true;
+        break;
+        case ALLEGRO_KEY_LEFT:
+          vet[2] = true;
+        break;
+        case ALLEGRO_KEY_RIGHT:
+          vet[3] = true;
+        break;
+        case ALLEGRO_KEY_ESCAPE:
+          vet[4] = true;
+      }
     }
     else /*if(character->eventKeyUp())*/{
-      character->getKeyUp(vet);
+      switch(character->getEvent().keyboard.keycode){
+        case ALLEGRO_KEY_UP:
+          vet[0] = false;
+        break;
+        case ALLEGRO_KEY_DOWN:
+          vet[1] = false;
+        break;
+        case ALLEGRO_KEY_LEFT:
+          vet[2] = false;
+        break;
+        case ALLEGRO_KEY_RIGHT:
+          vet[3] = false;
+        break;
+        case ALLEGRO_KEY_ESCAPE:
+          vet[4] = false;
+      }
     }
     if(character->eventCloseDisplay()){
       exit = true;
+      //exit(1);
     }
 
-    if(!haveWall(character->getPositionX(), character->getPositionY(), vet, wall))
-      character->move(vet);
 
 
+    if(vet[0] && matriz[character->getPositionY()/25-1][character->getPositionX()/25] != 1){
+      character->setPositions(character->getPositionX(),character->getPositionY()-25);
+    }
+    else if(vet[1] && matriz[character->getPositionY()/25+1][character->getPositionX()/25] != 1){
 
+      character->setPositions(character->getPositionX(),character->getPositionY()+25);
+    }
+    else if(vet[2] && matriz[character->getPositionY()/25][character->getPositionX()/25-1] != 1){
 
+      character->setPositions(character->getPositionX()-25,character->getPositionY());
+    }
+    else if(vet[3] && matriz[character->getPositionY()/25][character->getPositionX()/25+1] != 1){
+
+      character->setPositions(character->getPositionX()+25,character->getPositionY());
+    }
+
+    //DESENHA IMAGENS
+    for(int i = 0; i < 360; i++){
+      wall[i].loadImage();
+    }
+
+    for(int i = 0; i < 374; i++){
+      coin[i].loadImage();
+    }
+
+    //DESENHA CHARACTER
+    for(int i = 0; i < 1; i++){
+      character[i].loadImage();
+    }
+    al_flip_display();
+    al_draw_bitmap(al_load_bitmap("Images/background.jpg"),0,0,0);
+    
   }
 
 

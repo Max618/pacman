@@ -25,13 +25,11 @@ class Character {
 		int getPositionY();
 		void loadImage();
 		void waitEvent(ALLEGRO_EVENT_QUEUE*);
-		void getKeyDown(bool*);
-		void getKeyUp(bool*);
 		bool eventKeyDown();
 		bool eventKeyUp();
 		bool eventCloseDisplay();
-
-		void move(bool*);
+		
+		ALLEGRO_EVENT getEvent();
 
 		Character();
 		~Character();

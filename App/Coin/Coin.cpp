@@ -27,6 +27,7 @@ void Coin::setPositions(int x, int y){
 
 void Coin::loadImage(){
 	al_draw_bitmap(this->imageName,this->position_x,this->position_y,0);
+	
 }
 
 void Coin::destroyImage(){

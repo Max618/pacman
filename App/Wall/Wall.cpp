@@ -26,11 +26,11 @@ void Wall::setPositions(int x, int y){
 }
 
 int Wall::getPositionX(){
-	return position_x;
+	return this->position_x;
 }
 
 int Wall::getPositionY(){
-	return position_y;
+	return this->position_y;
 }
 
 void Wall::loadImage(){
