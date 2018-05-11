@@ -10,6 +10,8 @@
 #include <allegro5/allegro_primitives.h>
 #include <allegro5/allegro_image.h>
 #include <allegro5/allegro_native_dialog.h>
+#include <allegro5/allegro_font.h>
+#include <allegro5/allegro_ttf.h>
 
 using namespace std;
 
@@ -29,6 +31,26 @@ void rewrite(Wall wall[],Coin coin[],Character character[]){
     }
     al_flip_display();
     al_draw_bitmap(al_load_bitmap("Images/background.jpg"),0,0,0);
+
+
+}
+
+int getCoin(Coin coin[], int x, int y){
+
+    int i=0;
+    for (i = 0; i < 374; i++)
+      {
+        if (coin[i].getPositionX() == x*25 && coin[i].getPositionY() == y*25)
+         {
+           return i;
+         } 
+         
+      }
+    return -1;  
+}
+
+void escreve(ALLEGRO_FONT *fonte, int score){
+  al_draw_textf(fonte, al_map_rgb(0, 0, 0), 1000, 300, ALLEGRO_ALIGN_CENTRE, "PLACAR: %d", score);
 }
 
 int main(){
@@ -73,7 +95,14 @@ int main(){
   Wall *wall = new Wall[360];
   Coin *coin = new Coin[374];
   Character *character = new Character;
-  int w = 0, c = 0, ch = 0;
+  int w = 0, c = 0, ch = 0, k, score=0;
+
+  //CRIANDO SCORE
+  ALLEGRO_FONT *fonte = NULL;
+  al_init_font_addon();
+  al_init_ttf_addon();
+  fonte = al_load_font ("fonts/PORKYS_.TTF", 30, 0);
+
 
 
   //SETA POSICAO DAS IMAGENS
@@ -93,7 +122,7 @@ int main(){
 
   //EVENTOS DO TECLADO PARA ANDAR
   while(!exit){
-    if(direction == 0)
+    //if(direction == 0)
       character->waitEvent(alP->getEvents());
     
 
@@ -138,28 +167,57 @@ int main(){
     }
 
     if(direction==1 && matriz[character->getPositionY()-1][character->getPositionX()] != 1){
+        
+        k = getCoin(coin, character->getPositionX(), character->getPositionY()-1);
         character->setPositions(character->getPositionX(),character->getPositionY()-1);
+
+        if(k >= 0){
+          coin[k].setPositions(-1, 601);
+          score++;
+        } 
+
     }
 
     else if(direction==2 && matriz[character->getPositionY()+1][character->getPositionX()] != 1){
         character->setPositions(character->getPositionX(),character->getPositionY()+1);
+
+        k = getCoin(coin, character->getPositionX(), character->getPositionY());
+        if(k >= 0){
+          coin[k].setPositions(-1, 601);
+          score++;
+        } 
     }
 
     else if(direction==3 && matriz[character->getPositionY()][character->getPositionX()-1] != 1){
         character->setPositions(character->getPositionX()-1,character->getPositionY());
+
+        k = getCoin(coin, character->getPositionX(), character->getPositionY());
+        if(k >= 0){
+          coin[k].setPositions(-1, 601);
+          score++;
+        } 
     }
     else if(direction==4 && matriz[character->getPositionY()][character->getPositionX()+1] != 1){
         character->setPositions(character->getPositionX()+1,character->getPositionY());
+
+        k = getCoin(coin, character->getPositionX(), character->getPositionY());
+        if(k >= 0){
+          coin[k].setPositions(-1, 601);
+          score++;
+        } 
     }
     else
       direction = 0;
 
+    escreve(fonte, score);
     rewrite(wall,coin,character);
-
     
+
 
     //printf("%d\n", direction);
   }
+
+
 
 
   //DESTROI O JOGO

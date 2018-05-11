@@ -18,6 +18,9 @@ class Coin {
 		void setPositions(int, int);
 		void loadImage();
 
+		int getPositionX();
+		int getPositionY();
+
 		Coin();
 		~Coin();
 };

@@ -19,10 +19,18 @@ Coin::~Coin(){
 }
 
 void Coin::setPositions(int x, int y){
-	al_init_image_addon();
+	//al_init_image_addon();
 	this->imageName = al_load_bitmap("Images/coin.png");
 	this->position_x = x;
 	this->position_y = y;
+}
+
+int Coin::getPositionX(){
+	return this->position_x;
+}
+
+int Coin::getPositionY(){
+	return this->position_y;
 }
 
 void Coin::loadImage(){
