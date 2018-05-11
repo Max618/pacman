@@ -28,6 +28,7 @@ class Character {
 		bool eventKeyDown();
 		bool eventKeyUp();
 		bool eventCloseDisplay();
+		bool eventTimer();
 		
 		ALLEGRO_EVENT getEvent();
 

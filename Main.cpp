@@ -49,10 +49,6 @@ int getCoin(Coin coin[], int x, int y){
     return -1;  
 }
 
-void escreve(ALLEGRO_FONT *fonte, int score){
-  al_draw_textf(fonte, al_map_rgb(0, 0, 0), 1000, 300, ALLEGRO_ALIGN_CENTRE, "PLACAR: %d", score);
-}
-
 int main(){
 
     bool exit = false, reWrite = true;
@@ -90,19 +86,18 @@ int main(){
   alP->loadDisplay();
   alP->loadImage("background.jpg");
   alP->setEvents();
+  alP->loadFont();
+
+  ALLEGRO_TIMER *timer = NULL;
+  timer = al_create_timer(1.0 / 60);
+  al_register_event_source(alP->getEvents(), al_get_timer_event_source(timer));
+  al_start_timer(timer);
 
   //CRIA OBJETOS
   Wall *wall = new Wall[360];
   Coin *coin = new Coin[374];
   Character *character = new Character;
-  int w = 0, c = 0, ch = 0, k, score=0;
-
-  //CRIANDO SCORE
-  ALLEGRO_FONT *fonte = NULL;
-  al_init_font_addon();
-  al_init_ttf_addon();
-  fonte = al_load_font ("fonts/PORKYS_.TTF", 30, 0);
-
+  int w = 0, c = 0, ch = 0, k = 0, score=0, before = 0;
 
 
   //SETA POSICAO DAS IMAGENS
@@ -120,101 +115,130 @@ int main(){
     }
   }
 
+  //DESENHA IMAGENS
+  for(int i = 0; i < 360; i++){
+    wall[i].loadImage();
+  }
+
+  for(int i = 0; i < 374; i++){
+    coin[i].loadImage();
+  }
+
+  //DESENHA CHARACTER
+  for(int i = 0; i < 1; i++){
+    character[i].loadImage();
+  }
+  al_flip_display();
+
   //EVENTOS DO TECLADO PARA ANDAR
   while(!exit){
-    //if(direction == 0)
-      character->waitEvent(alP->getEvents());
-    
+    character->waitEvent(alP->getEvents());
 
-
-    if(character->eventKeyDown()){
-      switch(character->getEvent().keyboard.keycode){
-        case ALLEGRO_KEY_UP:
-          direction = 1;
-        break;
-        case ALLEGRO_KEY_DOWN:
-          direction = 2;
-        break;
-        case ALLEGRO_KEY_LEFT:
-          direction = 3;
-        break;
-        case ALLEGRO_KEY_RIGHT:
-          direction = 4;
-      }
-    }
-    else if(character->eventKeyUp()){
-      switch(character->getEvent().keyboard.keycode){
-        case ALLEGRO_KEY_UP:
-          direction = 1;
-        break;
-        case ALLEGRO_KEY_DOWN:
-          direction = 2;
-        break;
-        case ALLEGRO_KEY_LEFT:
-          direction = 3;
-        break;
-        case ALLEGRO_KEY_RIGHT:
-          direction = 4;
-        break;
-        case ALLEGRO_KEY_ESCAPE:
-          direction = 5;
-      }
-    
-    }
     if(character->eventCloseDisplay()){
       exit = true;
-      //exit(1);
+      break;
     }
 
-    if(direction==1 && matriz[character->getPositionY()-1][character->getPositionX()] != 1){
-        
+    else if(character->eventTimer()){
+      if(direction==1 && matriz[character->getPositionY()-1][character->getPositionX()] != 1){
         k = getCoin(coin, character->getPositionX(), character->getPositionY()-1);
         character->setPositions(character->getPositionX(),character->getPositionY()-1);
-
         if(k >= 0){
           coin[k].setPositions(-1, 601);
           score++;
-        } 
-
-    }
-
-    else if(direction==2 && matriz[character->getPositionY()+1][character->getPositionX()] != 1){
+        }
+        before = direction; 
+      }
+      else if(direction==2 && matriz[character->getPositionY()+1][character->getPositionX()] != 1){
         character->setPositions(character->getPositionX(),character->getPositionY()+1);
-
         k = getCoin(coin, character->getPositionX(), character->getPositionY());
         if(k >= 0){
           coin[k].setPositions(-1, 601);
           score++;
-        } 
-    }
-
-    else if(direction==3 && matriz[character->getPositionY()][character->getPositionX()-1] != 1){
+        }
+        before = direction; 
+      }
+      else if(direction==3 && matriz[character->getPositionY()][character->getPositionX()-1] != 1){
         character->setPositions(character->getPositionX()-1,character->getPositionY());
-
         k = getCoin(coin, character->getPositionX(), character->getPositionY());
         if(k >= 0){
           coin[k].setPositions(-1, 601);
           score++;
-        } 
-    }
-    else if(direction==4 && matriz[character->getPositionY()][character->getPositionX()+1] != 1){
+        }
+        before = direction; 
+      }
+      else if(direction==4 && matriz[character->getPositionY()][character->getPositionX()+1] != 1){
         character->setPositions(character->getPositionX()+1,character->getPositionY());
-
         k = getCoin(coin, character->getPositionX(), character->getPositionY());
         if(k >= 0){
           coin[k].setPositions(-1, 601);
           score++;
-        } 
+        }
+        before = direction; 
+      }
+      else{
+          if(before==1 && matriz[character->getPositionY()-1][character->getPositionX()] != 1){
+            k = getCoin(coin, character->getPositionX(), character->getPositionY()-1);
+            character->setPositions(character->getPositionX(),character->getPositionY()-1);
+            if(k >= 0){
+              coin[k].setPositions(-1, 601);
+              score++;
+            }
+          }
+          else if(direction==2 && matriz[character->getPositionY()+1][character->getPositionX()] != 1){
+            character->setPositions(character->getPositionX(),character->getPositionY()+1);
+            k = getCoin(coin, character->getPositionX(), character->getPositionY());
+            if(k >= 0){
+              coin[k].setPositions(-1, 601);
+              score++;
+            }
+          }
+          else if(direction==3 && matriz[character->getPositionY()][character->getPositionX()-1] != 1){
+            character->setPositions(character->getPositionX()-1,character->getPositionY());
+            k = getCoin(coin, character->getPositionX(), character->getPositionY());
+            if(k >= 0){
+              coin[k].setPositions(-1, 601);
+              score++;
+            }
+          }
+          else if(direction==4 && matriz[character->getPositionY()][character->getPositionX()+1] != 1){
+            character->setPositions(character->getPositionX()+1,character->getPositionY());
+            k = getCoin(coin, character->getPositionX(), character->getPositionY());
+            if(k >= 0){
+              coin[k].setPositions(-1, 601);
+              score++;
+            }
+          }
+      }
     }
-    else
-      direction = 0;
+    else if(character->eventKeyDown()){
+      switch(character->getEvent().keyboard.keycode){
+        case ALLEGRO_KEY_UP:
+          direction = 1;
+        break;
+        case ALLEGRO_KEY_DOWN:
+          direction = 2;
+        break;
+        case ALLEGRO_KEY_LEFT:
+          direction = 3;
+        break;
+        case ALLEGRO_KEY_RIGHT:
+          direction = 4;
+      }
+    }
 
-    escreve(fonte, score);
-    rewrite(wall,coin,character);
-    
+    if(score == 374){
+      exit = true;
+      break;
+    }
 
+    reWrite = true;
+    if(alP->checkEvents() && reWrite){
+      alP->writeScore(score);
+      rewrite(wall,coin,character);
+      reWrite = false;
+    }
 
-    //printf("%d\n", direction);
   }
 
 

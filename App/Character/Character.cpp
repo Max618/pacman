@@ -5,6 +5,8 @@
 #include <allegro5/allegro.h>
 #include <allegro5/allegro_image.h>
 #include <cstring>
+#include <allegro5/allegro_font.h>
+#include <allegro5/allegro_ttf.h>
 
 using namespace std;
 
@@ -65,4 +67,8 @@ bool Character::eventKeyUp(){
 
 bool Character::eventCloseDisplay(){
 	return ((this->event).type == ALLEGRO_EVENT_DISPLAY_CLOSE);
+}
+
+bool Character::eventTimer(){
+	return ((this->event).type == ALLEGRO_EVENT_TIMER);
 }

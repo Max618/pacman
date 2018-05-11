@@ -3,14 +3,21 @@
 #include <allegro5/allegro_native_dialog.h>
 #include <stdio.h>
 #include "AllegroProvider.h"
+#include <allegro5/allegro_image.h>
+#include <allegro5/allegro_native_dialog.h>
+#include <allegro5/allegro_font.h>
+#include <allegro5/allegro_ttf.h>
 
 using namespace std;
 
 AllegroProvider::AllegroProvider(){
 	this->display = NULL;
+	this->font = NULL;
 	al_init();
 	al_install_keyboard();
 	al_init_image_addon();
+	al_init_font_addon();
+  	al_init_ttf_addon();
 }
 
 void AllegroProvider::setDisplay(int width, int height){
@@ -55,4 +62,16 @@ void AllegroProvider::setEvents(){
 
 ALLEGRO_EVENT_QUEUE* AllegroProvider::getEvents(){
 	return this->events;
+}
+
+void AllegroProvider::loadFont(){
+	this->font = al_load_font("fonts/PORKYS_.TTF", 64, 0);
+}
+
+void AllegroProvider::writeScore(int score){
+	al_draw_textf(this->font, al_map_rgb(0, 0, 0), 1000, 150, ALLEGRO_ALIGN_CENTRE, "PLACAR: %d", score);
+}
+
+bool AllegroProvider::checkEvents(){
+	return al_is_event_queue_empty(this->events);
 }

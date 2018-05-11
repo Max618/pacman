@@ -3,6 +3,8 @@
 #include <allegro5/allegro.h>
 #include <allegro5/allegro_image.h>
 #include <allegro5/allegro_native_dialog.h>
+#include <allegro5/allegro_font.h>
+#include <allegro5/allegro_ttf.h>
 class AllegroProvider {
 /*----------------- File: AllegroProvider.h ---------------------+
 |DESCRICAO DO ARQUIVO 								  |
@@ -15,6 +17,7 @@ class AllegroProvider {
 		ALLEGRO_DISPLAY *display; //Tela
 		char* getPublic(char*);
 		ALLEGRO_EVENT_QUEUE *events;
+		ALLEGRO_FONT *font;
 	public:
 		AllegroProvider();
 		void setDisplay(int,int);
@@ -25,5 +28,10 @@ class AllegroProvider {
 
 		void setEvents();
 		ALLEGRO_EVENT_QUEUE* getEvents();
+
+		void loadFont();
+		void writeScore(int);
+
+		bool checkEvents();
 };
 #endif
