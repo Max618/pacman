@@ -48,8 +48,9 @@ char* AllegroProvider::getPublic(char* filename){
 
 void AllegroProvider::setEvents(){
 	this->events = al_create_event_queue();
-	al_register_event_source(this->events,al_get_keyboard_event_source());
 	//al_register_event_source(this->events,al_get_display_event_source(this->display));
+	al_register_event_source(this->events,al_get_keyboard_event_source());
+	
 }
 
 ALLEGRO_EVENT_QUEUE* AllegroProvider::getEvents(){

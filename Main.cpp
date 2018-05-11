@@ -33,7 +33,8 @@ void rewrite(Wall wall[],Coin coin[],Character character[]){
 
 int main(){
 
-    bool vet[5]= {false}, exit = false, reWrite = true;
+    bool exit = false, reWrite = true;
+    int direction = 0, next = 0;
     int matriz[24][32] = {
                           1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
                           1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
@@ -85,85 +86,79 @@ int main(){
         coin[c++].setPositions(j*25,i*25);
       }
       else if((matriz[i][j]) == 3){
-        character[ch++].setPositions(j*25,i*25);
+        character[ch++].setPositions(j,i);
       }
     }
   }
 
   //EVENTOS DO TECLADO PARA ANDAR
   while(!exit){
-    character->waitEvent(alP->getEvents());
+    if(direction == 0)
+      character->waitEvent(alP->getEvents());
+    
+
+
     if(character->eventKeyDown()){
       switch(character->getEvent().keyboard.keycode){
         case ALLEGRO_KEY_UP:
-          vet[0] = true;
+          direction = 1;
         break;
         case ALLEGRO_KEY_DOWN:
-          vet[1] = true;
+          direction = 2;
         break;
         case ALLEGRO_KEY_LEFT:
-          vet[2] = true;
+          direction = 3;
         break;
         case ALLEGRO_KEY_RIGHT:
-          vet[3] = true;
-        break;
-        case ALLEGRO_KEY_ESCAPE:
-          vet[4] = true;
+          direction = 4;
       }
     }
     else if(character->eventKeyUp()){
       switch(character->getEvent().keyboard.keycode){
         case ALLEGRO_KEY_UP:
-          vet[0] = false;
+          direction = 1;
         break;
         case ALLEGRO_KEY_DOWN:
-          vet[1] = false;
+          direction = 2;
         break;
         case ALLEGRO_KEY_LEFT:
-          vet[2] = false;
+          direction = 3;
         break;
         case ALLEGRO_KEY_RIGHT:
-          vet[3] = false;
+          direction = 4;
         break;
         case ALLEGRO_KEY_ESCAPE:
-          vet[4] = false;
+          direction = 5;
       }
+    
     }
     if(character->eventCloseDisplay()){
       exit = true;
       //exit(1);
     }
 
-    if(vet[0]){
-      while(matriz[character->getPositionY()/25-1][character->getPositionX()/25] != 1){
-        character->setPositions(character->getPositionX(),character->getPositionY()-25);
-        rewrite(wall,coin,character);
-      }
+    if(direction==1 && matriz[character->getPositionY()-1][character->getPositionX()] != 1){
+        character->setPositions(character->getPositionX(),character->getPositionY()-1);
     }
 
-    if(vet[1]){
-      while(matriz[character->getPositionY()/25+1][character->getPositionX()/25] != 1){
-        character->setPositions(character->getPositionX(),character->getPositionY()+25);
-        rewrite(wall,coin,character);
-      }
+    else if(direction==2 && matriz[character->getPositionY()+1][character->getPositionX()] != 1){
+        character->setPositions(character->getPositionX(),character->getPositionY()+1);
     }
 
-    if(vet[2]){
-      while(matriz[character->getPositionY()/25][character->getPositionX()/25-1] != 1){
-        character->setPositions(character->getPositionX()-25,character->getPositionY());
-        rewrite(wall,coin,character);
-      }
+    else if(direction==3 && matriz[character->getPositionY()][character->getPositionX()-1] != 1){
+        character->setPositions(character->getPositionX()-1,character->getPositionY());
     }
-
-    if(vet[3]){
-      while(matriz[character->getPositionY()/25][character->getPositionX()/25+1] != 1){
-        character->setPositions(character->getPositionX()+25,character->getPositionY());
-        rewrite(wall,coin,character);
-      }
+    else if(direction==4 && matriz[character->getPositionY()][character->getPositionX()+1] != 1){
+        character->setPositions(character->getPositionX()+1,character->getPositionY());
     }
+    else
+      direction = 0;
 
+    rewrite(wall,coin,character);
 
+    
 
+    //printf("%d\n", direction);
   }
 
 
