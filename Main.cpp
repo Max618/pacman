@@ -89,7 +89,7 @@ int main(){
   alP->loadFont();
 
   ALLEGRO_TIMER *timer = NULL;
-  timer = al_create_timer(1.0 / 60);
+  timer = al_create_timer(1.0 / 5);
   al_register_event_source(alP->getEvents(), al_get_timer_event_source(timer));
   al_start_timer(timer);
 
