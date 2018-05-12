@@ -14,7 +14,7 @@ class Character {
 | Implementado por "Matheus Candido" em 30/04/2018|
 +-----------------------------------------------------+ */
 	private:
-		ALLEGRO_BITMAP* imageName;
+		ALLEGRO_BITMAP* imageName[2];
 		int position_x, position_y;
 		ALLEGRO_EVENT event;
 		
@@ -23,7 +23,7 @@ class Character {
 		void setPositions(int, int);
 		int getPositionX();
 		int getPositionY();
-		void loadImage();
+		void loadImage(int);
 		void waitEvent(ALLEGRO_EVENT_QUEUE*);
 		bool eventKeyDown();
 		bool eventKeyUp();

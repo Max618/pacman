@@ -15,7 +15,7 @@
 
 using namespace std;
 
-void rewrite(Wall wall[],Coin coin[],Character character[]){
+void rewrite(Wall wall[],Coin coin[],Character character[], int direction){
     //DESENHA IMAGENS
     for(int i = 0; i < 360; i++){
       wall[i].loadImage();
@@ -27,12 +27,10 @@ void rewrite(Wall wall[],Coin coin[],Character character[]){
 
     //DESENHA CHARACTER
     for(int i = 0; i < 1; i++){
-      character[i].loadImage();
+      character[i].loadImage(direction);
     }
     al_flip_display();
     al_draw_bitmap(al_load_bitmap("Images/background.jpg"),0,0,0);
-
-
 }
 
 int getCoin(Coin coin[], int x, int y){
@@ -122,9 +120,9 @@ int main(){
 
   //DESENHA CHARACTER
   for(int i = 0; i < 1; i++){
-    character[i].loadImage();
+    character[i].loadImage(0);
   }
-  al_flip_display();
+  //al_flip_display();
 
   //EVENTOS DO TECLADO PARA ANDAR
   while(!Exit){
@@ -232,7 +230,7 @@ int main(){
     reWrite = true;
     if(alP->checkEvents() && reWrite){
       alP->writeScore(score);
-      rewrite(wall,coin,character);
+      rewrite(wall,coin,character,direction);
       reWrite = false;
     }
 

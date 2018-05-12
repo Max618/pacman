@@ -13,19 +13,22 @@ using namespace std;
 
 
 Character::Character(){
-	this->imageName = NULL;
+	this->imageName[0] = NULL;
+	this->imageName[1] = NULL;
 	this->position_x = this->position_y = -1;
 }
 
 Character::~Character(){
-	al_destroy_bitmap(this->imageName);
+	al_destroy_bitmap(this->imageName[0]);
+	al_destroy_bitmap(this->imageName[1]);
 	// delete [] this->imageName;
 }
 
 void Character::setPositions(int x, int y){
 	//al_install_keyboard();
 	//al_init_image_addon();
-	this->imageName = al_load_bitmap("Images/garuleft.png");
+	this->imageName[0] = al_load_bitmap("Images/garuleft.png");
+	this->imageName[1] = al_load_bitmap("Images/garuright.png");
 	this->position_x = x;
 	this->position_y = y;
 }
@@ -39,13 +42,18 @@ int Character::getPositionY(){
 }
 
 
-void Character::loadImage(){
-	al_draw_bitmap_region(this->imageName, 0, 0, 25, 25, this->position_x*25,this->position_y*25,0);
+void Character::loadImage(int direction){
+	if(direction == 1 || direction == 4)
+		al_draw_bitmap_region(this->imageName[1], 0, 0, 25, 25, this->position_x*25,this->position_y*25,0);
+	if(direction == 2 || direction == 3)
+		al_draw_bitmap_region(this->imageName[0], 0, 0, 25, 25, this->position_x*25,this->position_y*25,0);
 }
 
 void Character::destroyImage(){
-	al_destroy_bitmap(this->imageName);
-	this->imageName = NULL;
+	al_destroy_bitmap(this->imageName[0]);
+	al_destroy_bitmap(this->imageName[1]);
+	this->imageName[0] = NULL;
+	this->imageName[1] = NULL;
 	this->position_y = this->position_x = -1;
 }
 
