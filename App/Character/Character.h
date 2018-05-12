@@ -28,9 +28,12 @@ class Character {
 		bool eventKeyDown();
 		bool eventKeyUp();
 		bool eventCloseDisplay();
+		bool eventEscape();
 		bool eventTimer();
 		
 		ALLEGRO_EVENT getEvent();
+
+		void move(int);
 
 		Character();
 		~Character();

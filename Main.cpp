@@ -46,12 +46,12 @@ int getCoin(Coin coin[], int x, int y){
          } 
          
       }
-    return -1;  
+    return -1;
 }
 
 int main(){
 
-    bool exit = false, reWrite = true;
+    bool Exit = false, reWrite = true;
     int direction = 0, next = 0;
     int matriz[24][32] = {
                           1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
@@ -85,19 +85,15 @@ int main(){
   alP->setDisplay(1200,600);
   alP->loadDisplay();
   alP->loadImage("background.jpg");
+  alP->setFPS(6);
   alP->setEvents();
   alP->loadFont();
-
-  ALLEGRO_TIMER *timer = NULL;
-  timer = al_create_timer(1.0 / 5);
-  al_register_event_source(alP->getEvents(), al_get_timer_event_source(timer));
-  al_start_timer(timer);
 
   //CRIA OBJETOS
   Wall *wall = new Wall[360];
   Coin *coin = new Coin[374];
   Character *character = new Character;
-  int w = 0, c = 0, ch = 0, k = 0, score=0, before = 0;
+  int w = 0, c = 0, ch = 0, k = 0, score = 0, before = 0;
 
 
   //SETA POSICAO DAS IMAGENS
@@ -131,26 +127,28 @@ int main(){
   al_flip_display();
 
   //EVENTOS DO TECLADO PARA ANDAR
-  while(!exit){
+  while(!Exit){
     character->waitEvent(alP->getEvents());
 
     if(character->eventCloseDisplay()){
-      exit = true;
-      break;
+      exit(1);
+    }
+    if(character->eventEscape()){
+      exit(1);
     }
 
     else if(character->eventTimer()){
-      if(direction==1 && matriz[character->getPositionY()-1][character->getPositionX()] != 1){
-        k = getCoin(coin, character->getPositionX(), character->getPositionY()-1);
-        character->setPositions(character->getPositionX(),character->getPositionY()-1);
+      if(direction == 1 && matriz[character->getPositionY()-1][character->getPositionX()] != 1){
+        character->move(direction);
+         k = getCoin(coin, character->getPositionX(), character->getPositionY());
         if(k >= 0){
           coin[k].setPositions(-1, 601);
           score++;
         }
         before = direction; 
       }
-      else if(direction==2 && matriz[character->getPositionY()+1][character->getPositionX()] != 1){
-        character->setPositions(character->getPositionX(),character->getPositionY()+1);
+      else if(direction == 2 && matriz[character->getPositionY()+1][character->getPositionX()] != 1){
+        character->move(direction);
         k = getCoin(coin, character->getPositionX(), character->getPositionY());
         if(k >= 0){
           coin[k].setPositions(-1, 601);
@@ -158,8 +156,8 @@ int main(){
         }
         before = direction; 
       }
-      else if(direction==3 && matriz[character->getPositionY()][character->getPositionX()-1] != 1){
-        character->setPositions(character->getPositionX()-1,character->getPositionY());
+      else if(direction == 3 && matriz[character->getPositionY()][character->getPositionX()-1] != 1){
+        character->move(direction);
         k = getCoin(coin, character->getPositionX(), character->getPositionY());
         if(k >= 0){
           coin[k].setPositions(-1, 601);
@@ -167,8 +165,8 @@ int main(){
         }
         before = direction; 
       }
-      else if(direction==4 && matriz[character->getPositionY()][character->getPositionX()+1] != 1){
-        character->setPositions(character->getPositionX()+1,character->getPositionY());
+      else if(direction == 4 && matriz[character->getPositionY()][character->getPositionX()+1] != 1){
+        character->move(direction);
         k = getCoin(coin, character->getPositionX(), character->getPositionY());
         if(k >= 0){
           coin[k].setPositions(-1, 601);
@@ -177,32 +175,32 @@ int main(){
         before = direction; 
       }
       else{
-          if(before==1 && matriz[character->getPositionY()-1][character->getPositionX()] != 1){
+          if(before == 1 && matriz[character->getPositionY()-1][character->getPositionX()] != 1){
             k = getCoin(coin, character->getPositionX(), character->getPositionY()-1);
-            character->setPositions(character->getPositionX(),character->getPositionY()-1);
+            character->move(before);
             if(k >= 0){
               coin[k].setPositions(-1, 601);
               score++;
             }
           }
-          else if(direction==2 && matriz[character->getPositionY()+1][character->getPositionX()] != 1){
-            character->setPositions(character->getPositionX(),character->getPositionY()+1);
+          else if(before == 2 && matriz[character->getPositionY()+1][character->getPositionX()] != 1){
+            character->move(before);
             k = getCoin(coin, character->getPositionX(), character->getPositionY());
             if(k >= 0){
               coin[k].setPositions(-1, 601);
               score++;
             }
           }
-          else if(direction==3 && matriz[character->getPositionY()][character->getPositionX()-1] != 1){
-            character->setPositions(character->getPositionX()-1,character->getPositionY());
+          else if(before == 3 && matriz[character->getPositionY()][character->getPositionX()-1] != 1){
+            character->move(before);
             k = getCoin(coin, character->getPositionX(), character->getPositionY());
             if(k >= 0){
               coin[k].setPositions(-1, 601);
               score++;
             }
           }
-          else if(direction==4 && matriz[character->getPositionY()][character->getPositionX()+1] != 1){
-            character->setPositions(character->getPositionX()+1,character->getPositionY());
+          else if(before == 4 && matriz[character->getPositionY()][character->getPositionX()+1] != 1){
+            character->move(before);
             k = getCoin(coin, character->getPositionX(), character->getPositionY());
             if(k >= 0){
               coin[k].setPositions(-1, 601);
@@ -228,8 +226,7 @@ int main(){
     }
 
     if(score == 374){
-      exit = true;
-      break;
+      exit(1);
     }
 
     reWrite = true;

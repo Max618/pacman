@@ -15,11 +15,14 @@ class AllegroProvider {
 	private:
 		int width, height, matrix[24][32];
 		ALLEGRO_DISPLAY *display; //Tela
+		ALLEGRO_BITMAP  *image;
 		char* getPublic(char*);
 		ALLEGRO_EVENT_QUEUE *events;
 		ALLEGRO_FONT *font;
+		ALLEGRO_TIMER *timer;
 	public:
 		AllegroProvider();
+		~AllegroProvider();
 		void setDisplay(int,int);
 		void loadDisplay();
 		void setBackgroundColor(int, int, int);
@@ -33,5 +36,6 @@ class AllegroProvider {
 		void writeScore(int);
 
 		bool checkEvents();
+		void setFPS(int);
 };
 #endif

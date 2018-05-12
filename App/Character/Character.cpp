@@ -69,6 +69,21 @@ bool Character::eventCloseDisplay(){
 	return ((this->event).type == ALLEGRO_EVENT_DISPLAY_CLOSE);
 }
 
+bool Character::eventEscape(){
+	return ((this->event).keyboard.keycode == ALLEGRO_KEY_ESCAPE);
+}
+
 bool Character::eventTimer(){
 	return ((this->event).type == ALLEGRO_EVENT_TIMER);
+}
+
+void Character::move(int direction){
+	if(direction == 1)
+		this->position_y -= 1;
+	else if(direction == 2)
+		this->position_y += 1;
+	else if(direction == 3)
+		this->position_x -= 1;
+	else if(direction == 4)
+		this->position_x += 1;
 }
