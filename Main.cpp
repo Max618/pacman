@@ -6,12 +6,14 @@
 #include"App/Wall/Wall.h"
 #include"App/Coin/Coin.h"
 #include"App/Pacman/Pacman.h"
+#include"App/Ghost/Ghost.h"
 #include <allegro5/allegro.h>
 #include <allegro5/allegro_primitives.h>
 #include <allegro5/allegro_image.h>
 #include <allegro5/allegro_native_dialog.h>
 #include <allegro5/allegro_font.h>
 #include <allegro5/allegro_ttf.h>
+#include <stdlib.h>
 
 using namespace std;
 
@@ -21,7 +23,7 @@ void rewrite(Wall wall[],Coin coin[],Pacman pacman[], int direction){
       wall[i].loadImage();
     }
 
-    for(int i = 0; i < 374; i++){
+    for(int i = 0; i < 370; i++){
       coin[i].loadImage();
     }
 
@@ -36,7 +38,7 @@ void rewrite(Wall wall[],Coin coin[],Pacman pacman[], int direction){
 int getCoin(Coin coin[], int x, int y){
 
     int i=0;
-    for (i = 0; i < 374; i++)
+    for (i = 0; i < 370; i++)
       {
         if (coin[i].getPositionX() == x*25 && coin[i].getPositionY() == y*25)
          {
@@ -53,7 +55,7 @@ int main(){
     int direction = 0, next = 0;
     int matriz[24][32] = {
                           1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
-                          1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
+                          1,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,4,1,
                           1,0,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,0,1,
                           1,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,
                           1,0,1,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,1,0,1,
@@ -74,7 +76,7 @@ int main(){
                           1,0,1,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,1,0,1,
                           1,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,
                           1,0,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,0,1,
-                          1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
+                          1,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,4,1,
                           1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1
                           };
 
@@ -89,9 +91,10 @@ int main(){
 
   //CRIA OBJETOS
   Wall *wall = new Wall[360];
-  Coin *coin = new Coin[374];
+  Coin *coin = new Coin[370];
   Pacman *pacman = new Pacman;
-  int w = 0, c = 0, ch = 0, k = 0, score = 0, before = 0;
+  Ghost *ghost = new Ghost[4];
+  int w = 0, c = 0, ch = 0, g = 0, k = 0, score = 0, before = 0, gDir = 0;
 
 
   //SETA POSICAO DAS IMAGENS
@@ -107,6 +110,10 @@ int main(){
         pacman[ch].setImages("Images/garuleft.png","Images/garuright.png");
         pacman[ch++].setPositions(j,i);
       }
+      else if(matriz[i][j] == 4){
+        ghost[g].setImages("Images/garuright.png","Images/garuleft.png");
+        ghost[g++].setPositions(j,i);
+      }
     }
   }
 
@@ -115,15 +122,19 @@ int main(){
     wall[i].loadImage();
   }
 
-  for(int i = 0; i < 374; i++){
+  for(int i = 0; i < 370; i++){
     coin[i].loadImage();
   }
 
-  //DESENHA pacman
+  //DESENHA PACMAN
   for(int i = 0; i < 1; i++){
     pacman[i].loadImage(0);
   }
-  //al_flip_display();
+
+  //DESENHA GHOST
+  for(int i = 0; i < 4; i++){
+    ghost[i].loadImage(0);
+  }
 
   //EVENTOS DO TECLADO PARA ANDAR
   while(!Exit){
@@ -224,9 +235,31 @@ int main(){
       }
     }
 
-    if(score == 374){
+    if(score == 370){
       exit(1);
     }
+
+
+    for(int i = 0; i < 4; i++){
+      printf("ghost %d ", i+1);
+      if(gDir == 0 && matriz[ghost[i].getPositionY()-1][ghost[i].getPositionX()] != 1){
+        ghost[i].move(gDir);
+      }
+      else if(gDir == 1 && matriz[ghost[i].getPositionY()+1][ghost[i].getPositionX()] != 1){
+        ghost[i].move(gDir);
+      }
+      else if(gDir == 2 && matriz[ghost[i].getPositionY()][ghost[i].getPositionX()-1] != 1){
+        ghost[i].move(gDir);
+      }
+      else if(gDir == 3 && matriz[ghost[i].getPositionY()][ghost[i].getPositionX()+1] != 1){
+        ghost[i].move(gDir);
+      }
+      else{
+        gDir = (1+rand()%4)%4;
+      }
+      printf("\n");
+    }
+
 
     reWrite = true;
     if(alP->checkEvents() && reWrite){
@@ -246,7 +279,7 @@ int main(){
     wall[i].destroyImage();
   }
 
-  for(int i = 0; i < 374; i++){
+  for(int i = 0; i < 370; i++){
     coin[i].destroyImage();
   }
 
@@ -254,10 +287,15 @@ int main(){
     pacman[i].destroyImage();
   }
 
+  for(int i = 0; i < 4; i++){
+    ghost[i].destroyImage();
+  }
+
   delete [] alP;
   delete [] wall;
   delete [] coin;
   delete [] pacman;
+  delete [] ghost;
   
 
   return 0;
