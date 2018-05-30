@@ -10,8 +10,6 @@
 
 using namespace std;
 
-
-
 Character::Character(){
 	this->imageName[0] = NULL;
 	this->imageName[1] = NULL;
@@ -21,16 +19,24 @@ Character::Character(){
 Character::~Character(){
 	al_destroy_bitmap(this->imageName[0]);
 	al_destroy_bitmap(this->imageName[1]);
-	// delete [] this->imageName;
 }
 
 void Character::setPositions(int x, int y){
-	//al_install_keyboard();
-	//al_init_image_addon();
-	this->imageName[0] = al_load_bitmap("Images/garuleft.png");
-	this->imageName[1] = al_load_bitmap("Images/garuright.png");
 	this->position_x = x;
 	this->position_y = y;
+}
+
+void Character::setPositionX(int x){
+	this->position_x = x;
+}
+
+void Character::setPositionY(int y){
+	this->position_y = y;
+}
+
+void Character::setImages(char* img, char* img2){
+	this->imageName[0] = al_load_bitmap(img);
+	this->imageName[1] = al_load_bitmap(img2);
 }
 
 int Character::getPositionX(){
@@ -55,43 +61,4 @@ void Character::destroyImage(){
 	this->imageName[0] = NULL;
 	this->imageName[1] = NULL;
 	this->position_y = this->position_x = -1;
-}
-
-void Character::waitEvent(ALLEGRO_EVENT_QUEUE* fila_eventos){
-	al_wait_for_event(fila_eventos,&(this->event));
-}
-
-ALLEGRO_EVENT Character::getEvent(){
-	return (this->event);
-}
-
-bool Character::eventKeyDown(){
-	return ((this->event).type == ALLEGRO_EVENT_KEY_DOWN);
-}
-
-bool Character::eventKeyUp(){
-	return ((this->event).type == ALLEGRO_EVENT_KEY_UP);
-}
-
-bool Character::eventCloseDisplay(){
-	return ((this->event).type == ALLEGRO_EVENT_DISPLAY_CLOSE);
-}
-
-bool Character::eventEscape(){
-	return ((this->event).keyboard.keycode == ALLEGRO_KEY_ESCAPE);
-}
-
-bool Character::eventTimer(){
-	return ((this->event).type == ALLEGRO_EVENT_TIMER);
-}
-
-void Character::move(int direction){
-	if(direction == 1)
-		this->position_y -= 1;
-	else if(direction == 2)
-		this->position_y += 1;
-	else if(direction == 3)
-		this->position_x -= 1;
-	else if(direction == 4)
-		this->position_x += 1;
 }

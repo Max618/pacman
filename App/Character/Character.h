@@ -16,26 +16,21 @@ class Character {
 	private:
 		ALLEGRO_BITMAP* imageName[2];
 		int position_x, position_y;
-		ALLEGRO_EVENT event;
+		
 		
 	public:
 		void destroyImage();
 		void setPositions(int, int);
 		int getPositionX();
 		int getPositionY();
+		void setPositionX(int);
+		void setPositionY(int);
 		void loadImage(int);
-		void waitEvent(ALLEGRO_EVENT_QUEUE*);
-		bool eventKeyDown();
-		bool eventKeyUp();
-		bool eventCloseDisplay();
-		bool eventEscape();
-		bool eventTimer();
-		
-		ALLEGRO_EVENT getEvent();
+		void setImages(char*, char*);
 
-		void move(int);
+		virtual void move(int) = 0;
 
 		Character();
-		~Character();
+		virtual ~Character();
 };
 #endif
