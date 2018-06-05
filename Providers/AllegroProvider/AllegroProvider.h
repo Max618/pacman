@@ -34,6 +34,7 @@ class AllegroProvider {
 
 		void loadFont();
 		void writeScore(int);
+		void writeEndGame(int);
 
 		bool checkEvents();
 		void setFPS(int);

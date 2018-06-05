@@ -90,3 +90,8 @@ bool AllegroProvider::checkEvents(){
 void AllegroProvider::setFPS(int x){
 	this->timer = al_create_timer(1.0 / x);
 }
+
+void AllegroProvider::writeEndGame(int score){
+	int r = al_show_native_message_box(NULL,"Fim de Jogo","Fim de Jogo","Voce chegou ao fim de jogo",NULL,ALLEGRO_MESSAGEBOX_WARN);
+    printf("%i",r);
+}

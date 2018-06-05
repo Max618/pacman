@@ -17,13 +17,13 @@
 
 using namespace std;
 
-void rewrite(Wall wall[],Coin coin[],Pacman pacman[], int direction){
+void rewrite(Wall wall[],Coin coin[],Pacman pacman[], int direction, Ghost ghost[]){
     //DESENHA IMAGENS
-    for(int i = 0; i < 360; i++){
+    for(int i = 0; i < 368; i++){
       wall[i].loadImage();
     }
 
-    for(int i = 0; i < 370; i++){
+    for(int i = 0; i < 362; i++){
       coin[i].loadImage();
     }
 
@@ -31,6 +31,12 @@ void rewrite(Wall wall[],Coin coin[],Pacman pacman[], int direction){
     for(int i = 0; i < 1; i++){
       pacman[i].loadImage(direction);
     }
+
+    //DESENHA GHOST
+    for(int i = 0; i < 4; i++){
+      ghost[i].loadImage(1);
+    }
+
     al_flip_display();
     al_draw_bitmap(al_load_bitmap("Images/background.jpg"),0,0,0);
 }
@@ -38,7 +44,7 @@ void rewrite(Wall wall[],Coin coin[],Pacman pacman[], int direction){
 int getCoin(Coin coin[], int x, int y){
 
     int i=0;
-    for (i = 0; i < 370; i++)
+    for (i = 0; i < 362; i++)
       {
         if (coin[i].getPositionX() == x*25 && coin[i].getPositionY() == y*25)
          {
@@ -47,6 +53,14 @@ int getCoin(Coin coin[], int x, int y){
          
       }
     return -1;
+}
+
+bool checkPacmanGhost(Pacman pacman[], Ghost ghost[]){
+  for(int i = 0; i < 4; i++){
+    if(pacman->getPositionX() == ghost[i].getPositionX() && pacman->getPositionY() == ghost[i].getPositionY())
+      return true;
+  }
+  return false;
 }
 
 int main(){
@@ -58,9 +72,9 @@ int main(){
                           1,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,4,1,
                           1,0,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,0,1,
                           1,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,
-                          1,0,1,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,1,0,1,
+                          1,0,1,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,1,0,1,
                           1,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,
-                          1,0,1,0,1,1,1,1,1,1,0,0,0,1,1,1,1,1,1,0,0,0,1,1,1,1,1,1,0,1,0,1,
+                          1,0,1,0,1,1,1,1,1,1,0,1,0,1,1,1,1,1,1,0,1,0,1,1,1,1,1,1,0,1,0,1,
                           1,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,
                           1,0,1,0,1,1,1,1,1,1,1,1,1,1,1,0,0,1,1,1,1,1,1,1,1,1,1,1,0,1,0,1,
                           1,0,1,0,0,0,0,1,0,0,0,1,2,2,2,2,2,2,2,2,1,0,0,0,1,0,0,0,0,1,0,1,
@@ -71,9 +85,9 @@ int main(){
                           1,0,1,0,0,1,0,0,0,1,0,0,2,2,2,2,2,2,2,2,0,0,1,0,0,0,1,0,0,1,0,1,
                           1,0,1,0,1,1,1,1,1,1,1,1,1,1,1,0,0,1,1,1,1,1,1,1,1,1,1,1,0,1,0,1,
                           1,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,
-                          1,0,1,0,1,1,1,1,1,1,0,0,0,1,1,1,1,1,1,0,0,0,1,1,1,1,1,1,0,1,0,1,
+                          1,0,1,0,1,1,1,1,1,1,0,1,0,1,1,1,1,1,1,0,1,0,1,1,1,1,1,1,0,1,0,1,
                           1,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,
-                          1,0,1,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,1,0,1,
+                          1,0,1,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,1,0,1,
                           1,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,
                           1,0,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,0,1,
                           1,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,4,1,
@@ -90,11 +104,12 @@ int main(){
   alP->loadFont();
 
   //CRIA OBJETOS
-  Wall *wall = new Wall[360];
-  Coin *coin = new Coin[370];
+  Wall *wall = new Wall[368];
+  Coin *coin = new Coin[362];
   Pacman *pacman = new Pacman;
   Ghost *ghost = new Ghost[4];
-  int w = 0, c = 0, ch = 0, g = 0, k = 0, score = 0, before = 0, gDir = 0;
+  int w = 0, c = 0, ch = 0, g = 0, k = 0, score = 0, before = 0, gDir[4] = {-1}, d = 0;
+  bool startGame = false;
 
 
   //SETA POSICAO DAS IMAGENS
@@ -118,11 +133,11 @@ int main(){
   }
 
   //DESENHA IMAGENS
-  for(int i = 0; i < 360; i++){
+  for(int i = 0; i < 368; i++){
     wall[i].loadImage();
   }
 
-  for(int i = 0; i < 370; i++){
+  for(int i = 0; i < 362; i++){
     coin[i].loadImage();
   }
 
@@ -218,6 +233,97 @@ int main(){
             }
           }
       }
+      if(startGame){
+          for(int i = 0; i < 4; i++){
+          if(gDir[i] == 0 && matriz[ghost[i].getPositionY()-1][ghost[i].getPositionX()] != 1){
+            if(matriz[ghost[i].getPositionY()][ghost[i].getPositionX()-1] != 1 && matriz[ghost[i].getPositionY()][ghost[i].getPositionX()+1] == 1){
+              do{
+                d = (1+rand()%4)%4;
+              }while(d == 1 || d == 3);
+              gDir[i] = d;
+            }
+            if(matriz[ghost[i].getPositionY()][ghost[i].getPositionX()-1] == 1 && matriz[ghost[i].getPositionY()][ghost[i].getPositionX()+1] != 1){
+              do{
+                d = (1+rand()%4)%4;
+              }while(d == 1 || d == 2);
+              gDir[i] = d;
+            }
+            if(matriz[ghost[i].getPositionY()][ghost[i].getPositionX()-1] != 1 && matriz[ghost[i].getPositionY()][ghost[i].getPositionX()+1] != 1){
+              do{
+                d = (1+rand()%4)%4;
+              }while(d == 1);
+              gDir[i] = d;
+            }
+            ghost[i].move(gDir[i]);
+          }
+          else if(gDir[i] == 1 && matriz[ghost[i].getPositionY()+1][ghost[i].getPositionX()] != 1){
+            if(matriz[ghost[i].getPositionY()][ghost[i].getPositionX()-1] != 1 && matriz[ghost[i].getPositionY()][ghost[i].getPositionX()+1] == 1){
+              do{
+                d = (1+rand()%4)%4;
+              }while(d == 0 || d == 3);
+              gDir[i] = d;
+            }
+            if(matriz[ghost[i].getPositionY()][ghost[i].getPositionX()-1] == 1 && matriz[ghost[i].getPositionY()][ghost[i].getPositionX()+1] != 1){
+              do{
+                d = (1+rand()%4)%4;
+              }while(d == 0 || d == 2);
+              gDir[i] = d;
+            }
+            if(matriz[ghost[i].getPositionY()][ghost[i].getPositionX()-1] != 1 && matriz[ghost[i].getPositionY()][ghost[i].getPositionX()+1] != 1){
+              do{
+                d = (1+rand()%4)%4;
+              }while(d == 0);
+              gDir[i] = d;
+            }
+            ghost[i].move(gDir[i]);
+          }
+          else if(gDir[i] == 2 && matriz[ghost[i].getPositionY()][ghost[i].getPositionX()-1] != 1){
+            if(matriz[ghost[i].getPositionY()-1][ghost[i].getPositionX()] != 1 && matriz[ghost[i].getPositionY()+1][ghost[i].getPositionX()] == 1){
+              do{
+                d = (1+rand()%4)%4;
+              }while(d == 3 || d == 1);
+              gDir[i] = d;
+            }
+            if(matriz[ghost[i].getPositionY()-1][ghost[i].getPositionX()] == 1 && matriz[ghost[i].getPositionY()+1][ghost[i].getPositionX()] != 1){
+              do{
+                d = (1+rand()%4)%4;
+              }while(d == 3 || d == 0);
+              gDir[i] = d;
+            }
+            if(matriz[ghost[i].getPositionY()-1][ghost[i].getPositionX()] != 1 && matriz[ghost[i].getPositionY()+1][ghost[i].getPositionX()] != 1){
+              do{
+                d = (1+rand()%4)%4;
+              }while(d == 3);
+              gDir[i] = d;
+            }
+            ghost[i].move(gDir[i]);
+          } 
+          else if(gDir[i] == 3 && matriz[ghost[i].getPositionY()][ghost[i].getPositionX()+1] != 1){
+            if(matriz[ghost[i].getPositionY()-1][ghost[i].getPositionX()] != 1 && matriz[ghost[i].getPositionY()+1][ghost[i].getPositionX()] == 1){
+              do{
+                d = (1+rand()%4)%4;
+              }while(d == 2 || d == 1);
+              gDir[i] = d;
+            }
+            if(matriz[ghost[i].getPositionY()-1][ghost[i].getPositionX()] == 1 && matriz[ghost[i].getPositionY()+1][ghost[i].getPositionX()] != 1){
+              do{
+                d = (1+rand()%4)%4;
+              }while(d == 2 || d == 0);
+              gDir[i] = d;
+            }
+            if(matriz[ghost[i].getPositionY()-1][ghost[i].getPositionX()] != 1 && matriz[ghost[i].getPositionY()+1][ghost[i].getPositionX()] != 1){
+              do{
+                d = (1+rand()%4)%4;
+              }while(d == 2);
+              gDir[i] = d;
+            }
+            ghost[i].move(gDir[i]);
+          }
+          else{
+           gDir[i] = (1+rand()%3)%4;
+          }
+        }
+      }
     }
     else if(pacman->eventKeyDown()){
       switch(pacman->getEvent().keyboard.keycode){
@@ -233,38 +339,18 @@ int main(){
         case ALLEGRO_KEY_RIGHT:
           direction = 4;
       }
+      startGame = true;
     }
 
-    if(score == 370){
+    if(score == 362 || checkPacmanGhost(pacman,ghost)){
+      alP->writeEndGame(score);
       exit(1);
     }
-
-
-    for(int i = 0; i < 4; i++){
-      printf("ghost %d ", i+1);
-      if(gDir == 0 && matriz[ghost[i].getPositionY()-1][ghost[i].getPositionX()] != 1){
-        ghost[i].move(gDir);
-      }
-      else if(gDir == 1 && matriz[ghost[i].getPositionY()+1][ghost[i].getPositionX()] != 1){
-        ghost[i].move(gDir);
-      }
-      else if(gDir == 2 && matriz[ghost[i].getPositionY()][ghost[i].getPositionX()-1] != 1){
-        ghost[i].move(gDir);
-      }
-      else if(gDir == 3 && matriz[ghost[i].getPositionY()][ghost[i].getPositionX()+1] != 1){
-        ghost[i].move(gDir);
-      }
-      else{
-        gDir = (1+rand()%4)%4;
-      }
-      printf("\n");
-    }
-
 
     reWrite = true;
     if(alP->checkEvents() && reWrite){
       alP->writeScore(score);
-      rewrite(wall,coin,pacman,direction);
+      rewrite(wall,coin,pacman,direction,ghost);
       reWrite = false;
     }
 
@@ -275,11 +361,11 @@ int main(){
 
   //DESTROI O JOGO
   alP->destroyDisplay();
-  for(int i = 0; i < 360; i++){
+  for(int i = 0; i < 368; i++){
     wall[i].destroyImage();
   }
 
-  for(int i = 0; i < 370; i++){
+  for(int i = 0; i < 362; i++){
     coin[i].destroyImage();
   }
 
