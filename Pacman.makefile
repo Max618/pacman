@@ -2,8 +2,8 @@ ALLEGRO_FLAGS=-L/usr/local/lib -lallegro `pkg-config --libs allegro-5 allegro_au
 
 ALLEGRO_INCLUDE= -I/usr/local/include/allegro5
 
-all: AllegroProvider.o Wall.o Main.o Coin.o Character.o Pacman.o Ghost.o
-	g++ AllegroProvider.o Wall.o Main.o Coin.o Character.o Pacman.o Ghost.o -o Pacman.exe $(ALLEGRO_INCLUDE) $(ALLEGRO_FLAGS)
+all: AllegroProvider.o Wall.o Main.o Coin.o Character.o Pacman.o Ghost.o SmartGhost.o
+	g++ AllegroProvider.o Wall.o Main.o Coin.o Character.o Pacman.o Ghost.o SmartGhost.o -o Pacman.exe $(ALLEGRO_INCLUDE) $(ALLEGRO_FLAGS)
 
 Main.o: Main.cpp
 	g++ -c Main.cpp $(ALLEGRO_INCLUDE) $(ALLEGRO_FLAGS)
@@ -25,6 +25,9 @@ Pacman.o: App/Pacman/Pacman.h App/Pacman/Pacman.cpp
 
 Ghost.o: App/Ghost/Ghost.h App/Ghost/Ghost.cpp
 	g++ -c App/Ghost/Ghost.cpp $(ALLEGRO_INCLUDE) $(ALLEGRO_FLAGS)
+
+SmartGhost.o: App/SmartGhost/SmartGhost.h App/SmartGhost/SmartGhost.cpp
+	g++ -c App/SmartGhost/SmartGhost.cpp $(ALLEGRO_INCLUDE) $(ALLEGRO_FLAGS)
 
 clean:
 	rm *.o
