@@ -109,7 +109,7 @@ int main(){
   Pacman *pacman = new Pacman;
   Ghost *ghost = new Ghost[4];
   int w = 0, c = 0, ch = 0, g = 0, k = 0, score = 0, before = 0, gDir[4] = {-1}, d = 0;
-  bool startGame = false;
+  bool startGame = false, checkD[4] = {true};
 
 
   //SETA POSICAO DAS IMAGENS
@@ -235,93 +235,26 @@ int main(){
       }
       if(startGame){
           for(int i = 0; i < 4; i++){
-          if(gDir[i] == 0 && matriz[ghost[i].getPositionY()-1][ghost[i].getPositionX()] != 1){
-            if(matriz[ghost[i].getPositionY()][ghost[i].getPositionX()-1] != 1 && matriz[ghost[i].getPositionY()][ghost[i].getPositionX()+1] == 1){
-              do{
-                d = (1+rand()%4)%4;
-              }while(d == 1 || d == 3);
-              gDir[i] = d;
+            checkD[0] = checkD[1] = checkD[2] = checkD[3] = true;
+
+            if(matriz[ghost[i].getPositionY()-1][ghost[i].getPositionX()] == 1 || gDir[i] == 1){
+              checkD[0] = false;
             }
-            if(matriz[ghost[i].getPositionY()][ghost[i].getPositionX()-1] == 1 && matriz[ghost[i].getPositionY()][ghost[i].getPositionX()+1] != 1){
-              do{
-                d = (1+rand()%4)%4;
-              }while(d == 1 || d == 2);
-              gDir[i] = d;
+            if(matriz[ghost[i].getPositionY()+1][ghost[i].getPositionX()] == 1 || gDir[i] == 0){
+              checkD[1] = false;
             }
-            if(matriz[ghost[i].getPositionY()][ghost[i].getPositionX()-1] != 1 && matriz[ghost[i].getPositionY()][ghost[i].getPositionX()+1] != 1){
-              do{
-                d = (1+rand()%4)%4;
-              }while(d == 1);
-              gDir[i] = d;
+            if(matriz[ghost[i].getPositionY()][ghost[i].getPositionX()-1] == 1 || gDir[i] == 3){
+              checkD[2] = false;
             }
-            ghost[i].move(gDir[i]);
-          }
-          else if(gDir[i] == 1 && matriz[ghost[i].getPositionY()+1][ghost[i].getPositionX()] != 1){
-            if(matriz[ghost[i].getPositionY()][ghost[i].getPositionX()-1] != 1 && matriz[ghost[i].getPositionY()][ghost[i].getPositionX()+1] == 1){
-              do{
-                d = (1+rand()%4)%4;
-              }while(d == 0 || d == 3);
-              gDir[i] = d;
+            if(matriz[ghost[i].getPositionY()][ghost[i].getPositionX()+1] == 1 || gDir[i] == 2){
+              checkD[3] = false;
             }
-            if(matriz[ghost[i].getPositionY()][ghost[i].getPositionX()-1] == 1 && matriz[ghost[i].getPositionY()][ghost[i].getPositionX()+1] != 1){
-              do{
-                d = (1+rand()%4)%4;
-              }while(d == 0 || d == 2);
-              gDir[i] = d;
-            }
-            if(matriz[ghost[i].getPositionY()][ghost[i].getPositionX()-1] != 1 && matriz[ghost[i].getPositionY()][ghost[i].getPositionX()+1] != 1){
-              do{
-                d = (1+rand()%4)%4;
-              }while(d == 0);
-              gDir[i] = d;
-            }
-            ghost[i].move(gDir[i]);
-          }
-          else if(gDir[i] == 2 && matriz[ghost[i].getPositionY()][ghost[i].getPositionX()-1] != 1){
-            if(matriz[ghost[i].getPositionY()-1][ghost[i].getPositionX()] != 1 && matriz[ghost[i].getPositionY()+1][ghost[i].getPositionX()] == 1){
-              do{
-                d = (1+rand()%4)%4;
-              }while(d == 3 || d == 1);
-              gDir[i] = d;
-            }
-            if(matriz[ghost[i].getPositionY()-1][ghost[i].getPositionX()] == 1 && matriz[ghost[i].getPositionY()+1][ghost[i].getPositionX()] != 1){
-              do{
-                d = (1+rand()%4)%4;
-              }while(d == 3 || d == 0);
-              gDir[i] = d;
-            }
-            if(matriz[ghost[i].getPositionY()-1][ghost[i].getPositionX()] != 1 && matriz[ghost[i].getPositionY()+1][ghost[i].getPositionX()] != 1){
-              do{
-                d = (1+rand()%4)%4;
-              }while(d == 3);
-              gDir[i] = d;
-            }
-            ghost[i].move(gDir[i]);
-          } 
-          else if(gDir[i] == 3 && matriz[ghost[i].getPositionY()][ghost[i].getPositionX()+1] != 1){
-            if(matriz[ghost[i].getPositionY()-1][ghost[i].getPositionX()] != 1 && matriz[ghost[i].getPositionY()+1][ghost[i].getPositionX()] == 1){
-              do{
-                d = (1+rand()%4)%4;
-              }while(d == 2 || d == 1);
-              gDir[i] = d;
-            }
-            if(matriz[ghost[i].getPositionY()-1][ghost[i].getPositionX()] == 1 && matriz[ghost[i].getPositionY()+1][ghost[i].getPositionX()] != 1){
-              do{
-                d = (1+rand()%4)%4;
-              }while(d == 2 || d == 0);
-              gDir[i] = d;
-            }
-            if(matriz[ghost[i].getPositionY()-1][ghost[i].getPositionX()] != 1 && matriz[ghost[i].getPositionY()+1][ghost[i].getPositionX()] != 1){
-              do{
-                d = (1+rand()%4)%4;
-              }while(d == 2);
-              gDir[i] = d;
-            }
-            ghost[i].move(gDir[i]);
-          }
-          else{
-           gDir[i] = (1+rand()%3)%4;
-          }
+
+            do{
+              d = (1+rand()%4)%4;
+            }while(!checkD[d]);
+            gDir[i] = d;
+            ghost[i].move(d);
         }
       }
     }
