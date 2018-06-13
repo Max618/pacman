@@ -13,7 +13,7 @@ using namespace std;
 Character::Character(){
 	this->imageName[0] = NULL;
 	this->imageName[1] = NULL;
-	this->position_x = this->position_y = -1;
+	this->position_x = this->position_y = this->beforeD = this->direction = -1;
 }
 
 Character::~Character(){
@@ -61,4 +61,20 @@ void Character::destroyImage(){
 	this->imageName[0] = NULL;
 	this->imageName[1] = NULL;
 	this->position_y = this->position_x = -1;
+}
+
+void Character::setBeforeD(int d){
+	this->beforeD = d;
+}
+
+int Character::getBeforeD(){
+	return this->beforeD;
+}
+
+void Character::setDirection(int d){
+	this->direction = d;
+}
+
+int Character::getDirection(){
+	return this->direction;
 }

@@ -16,6 +16,7 @@ class Character {
 	private:
 		ALLEGRO_BITMAP* imageName[2];
 		int position_x, position_y;
+		int beforeD, direction;
 		
 		
 	public:
@@ -28,7 +29,13 @@ class Character {
 		void loadImage(int);
 		void setImages(char*, char*);
 
-		virtual void move(int) = 0;
+		void setBeforeD(int);
+		int getBeforeD();
+
+		void setDirection(int);
+		int getDirection();
+
+		virtual void move(int[][32]) = 0;
 
 		Character();
 		virtual ~Character();

@@ -18,7 +18,7 @@ class Ghost : public Character {
 		
 	public:
 
-		virtual void move(int);
+		virtual void move(int[][32]);
 
 		Ghost();
 		~Ghost();

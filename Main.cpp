@@ -163,114 +163,34 @@ int main(){
     }
 
     else if(pacman->eventTimer()){
-      if(direction == 1 && matriz[pacman->getPositionY()-1][pacman->getPositionX()] != 1){
-        pacman->move(direction);
-         k = getCoin(coin, pacman->getPositionX(), pacman->getPositionY());
-        if(k >= 0){
-          coin[k].setPositions(-1, 601);
-          score++;
-        }
-        before = direction; 
-      }
-      else if(direction == 2 && matriz[pacman->getPositionY()+1][pacman->getPositionX()] != 1){
-        pacman->move(direction);
+      if(pacman->getDirection() != -1){
+        pacman->move(matriz);
         k = getCoin(coin, pacman->getPositionX(), pacman->getPositionY());
         if(k >= 0){
           coin[k].setPositions(-1, 601);
           score++;
         }
-        before = direction; 
       }
-      else if(direction == 3 && matriz[pacman->getPositionY()][pacman->getPositionX()-1] != 1){
-        pacman->move(direction);
-        k = getCoin(coin, pacman->getPositionX(), pacman->getPositionY());
-        if(k >= 0){
-          coin[k].setPositions(-1, 601);
-          score++;
-        }
-        before = direction; 
-      }
-      else if(direction == 4 && matriz[pacman->getPositionY()][pacman->getPositionX()+1] != 1){
-        pacman->move(direction);
-        k = getCoin(coin, pacman->getPositionX(), pacman->getPositionY());
-        if(k >= 0){
-          coin[k].setPositions(-1, 601);
-          score++;
-        }
-        before = direction; 
-      }
-      else{
-          if(before == 1 && matriz[pacman->getPositionY()-1][pacman->getPositionX()] != 1){
-            k = getCoin(coin, pacman->getPositionX(), pacman->getPositionY()-1);
-            pacman->move(before);
-            if(k >= 0){
-              coin[k].setPositions(-1, 601);
-              score++;
-            }
-          }
-          else if(before == 2 && matriz[pacman->getPositionY()+1][pacman->getPositionX()] != 1){
-            pacman->move(before);
-            k = getCoin(coin, pacman->getPositionX(), pacman->getPositionY());
-            if(k >= 0){
-              coin[k].setPositions(-1, 601);
-              score++;
-            }
-          }
-          else if(before == 3 && matriz[pacman->getPositionY()][pacman->getPositionX()-1] != 1){
-            pacman->move(before);
-            k = getCoin(coin, pacman->getPositionX(), pacman->getPositionY());
-            if(k >= 0){
-              coin[k].setPositions(-1, 601);
-              score++;
-            }
-          }
-          else if(before == 4 && matriz[pacman->getPositionY()][pacman->getPositionX()+1] != 1){
-            pacman->move(before);
-            k = getCoin(coin, pacman->getPositionX(), pacman->getPositionY());
-            if(k >= 0){
-              coin[k].setPositions(-1, 601);
-              score++;
-            }
-          }
-      }
+
       if(startGame){
           for(int i = 0; i < 4; i++){
-            checkD[0] = checkD[1] = checkD[2] = checkD[3] = true;
-
-            if(matriz[ghost[i].getPositionY()-1][ghost[i].getPositionX()] == 1 || gDir[i] == 1){
-              checkD[0] = false;
-            }
-            if(matriz[ghost[i].getPositionY()+1][ghost[i].getPositionX()] == 1 || gDir[i] == 0){
-              checkD[1] = false;
-            }
-            if(matriz[ghost[i].getPositionY()][ghost[i].getPositionX()-1] == 1 || gDir[i] == 3){
-              checkD[2] = false;
-            }
-            if(matriz[ghost[i].getPositionY()][ghost[i].getPositionX()+1] == 1 || gDir[i] == 2){
-              checkD[3] = false;
-            }
-
-            do{
-              d = (1+rand()%4)%4;
-            }while(!checkD[d]);
-            gDir[i] = d;
-            ghost[i].move(d);
+            ghost[i].move(matriz);
         }
       }
     }
     else if(pacman->eventKeyDown()){
       switch(pacman->getEvent().keyboard.keycode){
         case ALLEGRO_KEY_UP:
-          direction = 1;
+          pacman->setDirection(1);
         break;
         case ALLEGRO_KEY_DOWN:
-          direction = 2;
+          pacman->setDirection(2);
         break;
         case ALLEGRO_KEY_LEFT:
-          direction = 3;
+          pacman->setDirection(3);
         break;
         case ALLEGRO_KEY_RIGHT:
-          direction = 4;
+          pacman->setDirection(4);
       }
       startGame = true;
     }
@@ -283,7 +203,7 @@ int main(){
     reWrite = true;
     if(alP->checkEvents() && reWrite){
       alP->writeScore(score);
-      rewrite(wall,coin,pacman,direction,ghost);
+      rewrite(wall,coin,pacman,pacman->getDirection(),ghost);
       reWrite = false;
     }
 

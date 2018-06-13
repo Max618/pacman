@@ -42,13 +42,44 @@ bool Pacman::eventTimer(){
 	return ((this->event).type == ALLEGRO_EVENT_TIMER);
 }
 
-void Pacman::move(int direction){
-	if(direction == 1)
+void Pacman::move(int matriz[][32]){
+
+	if(Character::getDirection() == 1 && matriz[Character::getPositionY()-1][Character::getPositionX()] != 1){
 		Character::setPositionY(Character::getPositionY() - 1);
-	else if(direction == 2)
+		Character::setBeforeD(Character::getDirection());
+	}
+	
+	else if(Character::getDirection() == 2 && matriz[Character::getPositionY()+1][Character::getPositionX()] != 1){
 		Character::setPositionY(Character::getPositionY() + 1);
-	else if(direction == 3)
+		Character::setBeforeD(Character::getDirection());
+	}
+
+	else if(Character::getDirection() == 3 && matriz[Character::getPositionY()][Character::getPositionX()-1] != 1){
 		Character::setPositionX(Character::getPositionX() - 1);
-	else if(direction == 4)
+		Character::setBeforeD(Character::getDirection());
+	}
+
+	else if(Character::getDirection() == 4 && matriz[Character::getPositionY()][Character::getPositionX()+1] != 1){
 		Character::setPositionX(Character::getPositionX() + 1);
+		Character::setBeforeD(Character::getDirection());
+	}
+
+	else{
+		if(Character::getBeforeD() == 1 && matriz[Character::getPositionY()-1][Character::getPositionX()] != 1){
+			Character::setPositionY(Character::getPositionY() - 1);
+		}
+
+		else if(Character::getBeforeD() == 2 && matriz[Character::getPositionY()+1][Character::getPositionX()] != 1){
+			Character::setPositionY(Character::getPositionY() + 1);
+		}
+
+		else if(Character::getBeforeD() == 3 && matriz[Character::getPositionY()][Character::getPositionX()-1] != 1){
+			Character::setPositionX(Character::getPositionX() - 1);
+		}
+
+		else if(Character::getBeforeD() == 4 && matriz[Character::getPositionY()][Character::getPositionX()+1] != 1){
+			Character::setPositionX(Character::getPositionX() + 1);
+		}
+	}
+
 }

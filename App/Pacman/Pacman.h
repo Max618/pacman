@@ -26,7 +26,7 @@ class Pacman : public Character {
 		bool eventTimer();
 		ALLEGRO_EVENT getEvent();
 
-		virtual void move(int);
+		virtual void move(int[][32]);
 
 		Pacman();
 		~Pacman();
