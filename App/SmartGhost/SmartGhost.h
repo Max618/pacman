@@ -15,10 +15,12 @@ class SmartGhost : public Ghost {
 | Implementado por "Gabriel Maximiniano" em 08/06/2018|
 +-----------------------------------------------------+ */
 	private:
-		
+		int pacX,pacY;
+		int mod(int);
 	public:
+		void setPac(int,int);
 
-		virtual void move(int);
+		virtual void move(int[][32]);
 
 		SmartGhost();
 		~SmartGhost();

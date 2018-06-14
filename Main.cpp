@@ -7,6 +7,7 @@
 #include"App/Coin/Coin.h"
 #include"App/Pacman/Pacman.h"
 #include"App/Ghost/Ghost.h"
+#include"App/SmartGhost/SmartGhost.h"
 #include <allegro5/allegro.h>
 #include <allegro5/allegro_primitives.h>
 #include <allegro5/allegro_image.h>
@@ -17,7 +18,7 @@
 
 using namespace std;
 
-void rewrite(Wall wall[],Coin coin[],Pacman pacman[], int direction, Ghost ghost[]){
+void rewrite(Wall wall[],Coin coin[],Pacman pacman[], int direction, Ghost ghost[], SmartGhost smart[]){
     //DESENHA IMAGENS
     for(int i = 0; i < 368; i++){
       wall[i].loadImage();
@@ -33,9 +34,11 @@ void rewrite(Wall wall[],Coin coin[],Pacman pacman[], int direction, Ghost ghost
     }
 
     //DESENHA GHOST
-    for(int i = 0; i < 4; i++){
+    for(int i = 0; i < 3; i++){
       ghost[i].loadImage(1);
     }
+    smart->loadImage(1);
+
 
     al_flip_display();
     al_draw_bitmap(al_load_bitmap("Images/background.jpg"),0,0,0);
@@ -56,7 +59,7 @@ int getCoin(Coin coin[], int x, int y){
 }
 
 bool checkPacmanGhost(Pacman pacman[], Ghost ghost[]){
-  for(int i = 0; i < 4; i++){
+  for(int i = 0; i < 3; i++){
     if(pacman->getPositionX() == ghost[i].getPositionX() && pacman->getPositionY() == ghost[i].getPositionY())
       return true;
   }
@@ -66,10 +69,9 @@ bool checkPacmanGhost(Pacman pacman[], Ghost ghost[]){
 int main(){
 
     bool Exit = false, reWrite = true;
-    int direction = 0, next = 0;
     int matriz[24][32] = {
                           1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
-                          1,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,4,1,
+                          1,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,5,1,
                           1,0,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,0,1,
                           1,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,
                           1,0,1,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,1,0,1,
@@ -107,9 +109,10 @@ int main(){
   Wall *wall = new Wall[368];
   Coin *coin = new Coin[362];
   Pacman *pacman = new Pacman;
-  Ghost *ghost = new Ghost[4];
-  int w = 0, c = 0, ch = 0, g = 0, k = 0, score = 0, before = 0, gDir[4] = {-1}, d = 0;
-  bool startGame = false, checkD[4] = {true};
+  Ghost *ghost = new Ghost[3];
+  SmartGhost *smart = new SmartGhost;
+  int w = 0, c = 0, ch = 0, g = 0, k = 0, score = 0;
+  bool startGame = false;
 
 
   //SETA POSICAO DAS IMAGENS
@@ -129,6 +132,10 @@ int main(){
         ghost[g].setImages("Images/garuright.png","Images/garuleft.png");
         ghost[g++].setPositions(j,i);
       }
+      else if(matriz[i][j] == 5){
+        smart->setImages("Images/garuright.png","Images/garuleft.png");
+        smart->setPositions(j,i);
+      }
     }
   }
 
@@ -147,9 +154,10 @@ int main(){
   }
 
   //DESENHA GHOST
-  for(int i = 0; i < 4; i++){
+  for(int i = 0; i < 3; i++){
     ghost[i].loadImage(0);
   }
+  smart->loadImage(0);
 
   //EVENTOS DO TECLADO PARA ANDAR
   while(!Exit){
@@ -173,9 +181,11 @@ int main(){
       }
 
       if(startGame){
-          for(int i = 0; i < 4; i++){
-            ghost[i].move(matriz);
+        for(int i = 0; i < 3; i++){
+          ghost[i].move(matriz);
         }
+        smart->setPac(pacman->getPositionX(),pacman->getPositionY());
+        smart->move(matriz);
       }
     }
     else if(pacman->eventKeyDown()){
@@ -195,7 +205,7 @@ int main(){
       startGame = true;
     }
 
-    if(score == 362 || checkPacmanGhost(pacman,ghost)){
+    if(score == 362 || checkPacmanGhost(pacman,ghost) || checkPacmanGhost(pacman,smart)){
       alP->writeEndGame(score);
       exit(1);
     }
@@ -203,7 +213,7 @@ int main(){
     reWrite = true;
     if(alP->checkEvents() && reWrite){
       alP->writeScore(score);
-      rewrite(wall,coin,pacman,pacman->getDirection(),ghost);
+      rewrite(wall,coin,pacman,pacman->getDirection(),ghost, smart);
       reWrite = false;
     }
 
@@ -226,16 +236,17 @@ int main(){
     pacman[i].destroyImage();
   }
 
-  for(int i = 0; i < 4; i++){
+  for(int i = 0; i < 3; i++){
     ghost[i].destroyImage();
   }
+  smart->destroyImage();
 
   delete [] alP;
   delete [] wall;
   delete [] coin;
   delete [] pacman;
   delete [] ghost;
-  
+  delete [] smart;
 
   return 0;
 }
