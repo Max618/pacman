@@ -56,6 +56,25 @@ void SmartGhost::move(int matriz[][32]){
       checkD[3] = false;
     }
 
+    if(!checkD[0] && !checkD[1] && !checkD[2] && !checkD[3]){
+    	checkD[0] = checkD[1] = checkD[2] = checkD[3] = true;
+    	if(matriz[Character::getPositionY()-1][Character::getPositionX()] == 1 || matriz[Character::getPositionY()-1][Character::getPositionX()] == 6 || Character::getBeforeD() == 1){
+	      checkD[0] = false;
+	    }
+	    if(matriz[Character::getPositionY()+1][Character::getPositionX()] == 1 || matriz[Character::getPositionY()+1][Character::getPositionX()] == 6 || Character::getBeforeD() == 0){
+	      checkD[1] = false;
+	    }
+	    if(matriz[Character::getPositionY()][Character::getPositionX()-1] == 1 || matriz[Character::getPositionY()][Character::getPositionX()-1] == 6 || Character::getBeforeD() == 3){
+	      checkD[2] = false;
+	    }
+	    if(matriz[Character::getPositionY()][Character::getPositionX()+1] == 1 || matriz[Character::getPositionY()][Character::getPositionX()+1] == 6 || Character::getBeforeD() == 2){
+	      checkD[3] = false;
+	    }
+	    do{
+	      d = (1+rand()%4)%4;
+	    }while(!checkD[d]);
+    }
+
     if(checkD[0] && (matriz[Character::getPositionY()-1][Character::getPositionX()] != 1 )){
 		Character::setPositionY(Character::getPositionY() - 1);
 		Character::setBeforeD(0);
