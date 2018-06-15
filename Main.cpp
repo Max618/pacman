@@ -18,7 +18,8 @@
 
 using namespace std;
 
-void rewrite(Wall wall[],Coin coin[],Pacman pacman[], int direction, Ghost ghost[], SmartGhost smart[]){
+void rewrite(Wall wall[],Coin coin[],Pacman pacman[], int direction[5], Ghost ghost[], SmartGhost smart[]){
+    int s = 0;
     //DESENHA IMAGENS
     for(int i = 0; i < 368; i++){
       wall[i].loadImage();
@@ -30,14 +31,14 @@ void rewrite(Wall wall[],Coin coin[],Pacman pacman[], int direction, Ghost ghost
 
     //DESENHA pacman
     for(int i = 0; i < 1; i++){
-      pacman[i].loadImage(direction);
+      pacman[i].loadImage(direction[s++]);
     }
 
     //DESENHA GHOST
     for(int i = 0; i < 3; i++){
-      ghost[i].loadImage(1);
+      ghost[i].loadImage(s++);
     }
-    smart->loadImage(1);
+    smart->loadImage(s);
 
 
     al_flip_display();
@@ -80,7 +81,7 @@ int main(){
                           1,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,
                           1,0,1,0,1,1,1,1,1,1,1,1,1,1,1,0,0,1,1,1,1,1,1,1,1,1,1,1,0,1,0,1,
                           1,0,1,0,0,0,0,1,0,0,0,1,2,2,2,2,2,2,2,2,1,0,0,0,1,0,0,0,0,1,0,1,
-                          1,0,1,0,0,1,0,1,0,1,0,1,2,1,1,2,2,1,1,2,1,0,1,0,1,0,1,0,0,1,0,1,
+                          1,0,1,0,0,1,0,1,0,1,0,1,2,1,1,6,6,1,1,2,1,0,1,0,1,0,1,0,0,1,0,1,
                           1,0,0,0,0,1,0,1,0,1,0,1,2,1,2,2,2,2,1,2,1,0,1,0,1,0,1,0,0,0,0,1,
                           1,0,1,0,0,1,0,1,0,1,0,1,2,1,2,2,3,2,1,2,1,0,1,0,1,0,1,0,0,1,0,1,
                           1,0,1,0,0,1,0,1,0,1,0,1,2,1,1,1,1,1,1,2,1,0,1,0,1,0,1,0,0,1,0,1,
@@ -111,8 +112,16 @@ int main(){
   Pacman *pacman = new Pacman;
   Ghost *ghost = new Ghost[3];
   SmartGhost *smart = new SmartGhost;
-  int w = 0, c = 0, ch = 0, g = 0, k = 0, score = 0;
+  int w = 0, c = 0, ch = 0, g = 0, k = 0, score = 0, img = 0, a = 0;
   bool startGame = false;
+
+  char images[6][50];
+  strcpy(images[0],"Images/capacetin-left.png");
+  strcpy(images[1],"Images/capacetin-right.png");
+  strcpy(images[2],"Images/chapeu-left.png");
+  strcpy(images[3],"Images/chapeu-right.png");
+  strcpy(images[4],"Images/loirinha-right.png");
+  strcpy(images[5],"Images/loirinha-left.png");
 
 
   //SETA POSICAO DAS IMAGENS
@@ -129,11 +138,11 @@ int main(){
         pacman[ch++].setPositions(j,i);
       }
       else if(matriz[i][j] == 4){
-        ghost[g].setImages("Images/garuright.png","Images/garuleft.png");
+        ghost[g].setImages(images[img++],images[img++]);
         ghost[g++].setPositions(j,i);
       }
       else if(matriz[i][j] == 5){
-        smart->setImages("Images/garuright.png","Images/garuleft.png");
+        smart->setImages("Images/puccona-left.png","Images/puccona-right.png");
         smart->setPositions(j,i);
       }
     }
@@ -161,6 +170,14 @@ int main(){
 
   //EVENTOS DO TECLADO PARA ANDAR
   while(!Exit){
+    /*for(int i = 0; i < 24; i++){
+      for(int j = 0; j < 32; j++){
+        printf("%d ", matriz[i][j]);
+      }
+      printf("\n");
+    }
+    printf("\n");*/
+
     pacman->waitEvent(alP->getEvents());
 
     if(pacman->eventCloseDisplay()){
@@ -173,10 +190,14 @@ int main(){
     else if(pacman->eventTimer()){
       if(pacman->getDirection() != -1){
         pacman->move(matriz);
+        smart->setPac(pacman->getPositionX(),pacman->getPositionY());
         k = getCoin(coin, pacman->getPositionX(), pacman->getPositionY());
         if(k >= 0){
           coin[k].setPositions(-1, 601);
           score++;
+          a = rand()%2;
+          if(a == 1)
+            matriz[pacman->getPositionY()][pacman->getPositionX()] = 7;
         }
       }
 
@@ -213,7 +234,8 @@ int main(){
     reWrite = true;
     if(alP->checkEvents() && reWrite){
       alP->writeScore(score);
-      rewrite(wall,coin,pacman,pacman->getDirection(),ghost, smart);
+      int dir[5] = {pacman->getDirection(),ghost[0].getDirection()+1,ghost[1].getDirection()+1,ghost[2].getDirection()+1, smart->getDirection()+1};
+      rewrite(wall,coin,pacman,dir,ghost, smart);
       reWrite = false;
     }
 

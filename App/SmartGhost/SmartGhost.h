@@ -16,7 +16,6 @@ class SmartGhost : public Ghost {
 +-----------------------------------------------------+ */
 	private:
 		int pacX,pacY;
-		int mod(int);
 	public:
 		void setPac(int,int);
 

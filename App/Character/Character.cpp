@@ -40,11 +40,11 @@ void Character::setImages(char* img, char* img2){
 }
 
 int Character::getPositionX(){
-	return position_x;
+	return this->position_x;
 }
 
 int Character::getPositionY(){
-	return position_y;
+	return this->position_y;
 }
 
 
