@@ -1,0 +1,3 @@
+O fantasma inteligente (Pucca, localizada no canto superior direito) utiliza a atual posicao dele e do pacman.
+
+A funcao move da classe SmartGhost compara as posicoes (X e Y) dele com as do Pacman e "permite" ele mover para a que for menor, tratando os casos de em que os dois estejam na mesma linha ou coluna. Após decidir qual dos caminhos é menor, ele "bloqueia" as posicoes que tem parede na qual era possivel mover antes e a posicao anterior. Caso todas as posicoes forem bloquadas ele define uma posicao nao possui parede proxima de forma aleatoria. Após isso, ele move para a primeira pocisao disponivel, caso essa posicao possua parede, ele continua o ultimo movimento.

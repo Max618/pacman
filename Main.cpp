@@ -18,7 +18,7 @@
 
 using namespace std;
 
-void rewrite(Wall wall[],Coin coin[],Pacman pacman[], int direction[5], Ghost ghost[], SmartGhost smart[]){
+void rewrite(Wall wall[],Coin coin[],Pacman pacman[], int direction[5], Ghost **ghosts){
     int s = 0;
     //DESENHA IMAGENS
     for(int i = 0; i < 368; i++){
@@ -35,10 +35,9 @@ void rewrite(Wall wall[],Coin coin[],Pacman pacman[], int direction[5], Ghost gh
     }
 
     //DESENHA GHOST
-    for(int i = 0; i < 3; i++){
-      ghost[i].loadImage(s++);
+    for(int i = 0; i < 4; i++){
+      ghosts[i]->loadImage(s++);
     }
-    smart->loadImage(s);
 
 
     al_flip_display();
@@ -59,7 +58,7 @@ int getCoin(Coin coin[], int x, int y){
     return -1;
 }
 
-bool checkPacmanGhost(Pacman pacman[], Ghost ghost[]){
+bool checkPacmanGhost(Pacman pacman[], Ghost **ghost){
   for(int i = 0; i < 3; i++){
     if(pacman->getPositionX() == ghost[i].getPositionX() && pacman->getPositionY() == ghost[i].getPositionY())
       return true;
@@ -111,6 +110,7 @@ int main(){
   Coin *coin = new Coin[362];
   Pacman *pacman = new Pacman;
   Ghost *ghost = new Ghost[3];
+  Ghost *ghosts[4];
   SmartGhost *smart = new SmartGhost;
   int w = 0, c = 0, ch = 0, g = 0, k = 0, score = 0, img = 0, a = 0;
   bool startGame = false;
@@ -148,6 +148,11 @@ int main(){
     }
   }
 
+  ghosts[0] = &ghost[0];
+  ghosts[1] = &ghost[1];
+  ghosts[2] = &ghost[2];
+  ghosts[3] = smart;
+
   //DESENHA IMAGENS
   for(int i = 0; i < 368; i++){
     wall[i].loadImage();
@@ -163,10 +168,10 @@ int main(){
   }
 
   //DESENHA GHOST
-  for(int i = 0; i < 3; i++){
-    ghost[i].loadImage(0);
+  for(int i = 0; i < 4; i++){
+    ghosts[i]->loadImage(0);
   }
-  smart->loadImage(0);
+  //smart->loadImage(0);
 
   //EVENTOS DO TECLADO PARA ANDAR
   while(!Exit){
@@ -195,18 +200,13 @@ int main(){
         if(k >= 0){
           coin[k].setPositions(-1, 601);
           score++;
-          a = rand()%2;
-          if(a == 1)
-            matriz[pacman->getPositionY()][pacman->getPositionX()] = 7;
         }
       }
 
       if(startGame){
-        for(int i = 0; i < 3; i++){
-          ghost[i].move(matriz);
+        for(int i = 0; i < 4; i++){
+          ghosts[i]->move(matriz);
         }
-        smart->setPac(pacman->getPositionX(),pacman->getPositionY());
-        smart->move(matriz);
       }
     }
     else if(pacman->eventKeyDown()){
@@ -226,17 +226,17 @@ int main(){
       startGame = true;
     }
 
-    if(score == 362 || checkPacmanGhost(pacman,ghost) || checkPacmanGhost(pacman,smart)){
-      alP->writeEndGame(score);
-      exit(1);
-    }
-
     reWrite = true;
     if(alP->checkEvents() && reWrite){
       alP->writeScore(score);
-      int dir[5] = {pacman->getDirection(),ghost[0].getDirection()+1,ghost[1].getDirection()+1,ghost[2].getDirection()+1, smart->getDirection()+1};
-      rewrite(wall,coin,pacman,dir,ghost, smart);
+      int dir[5] = {pacman->getDirection(),ghosts[0]->getDirection()+1,ghosts[1]->getDirection()+1,ghosts[2]->getDirection()+1, ghosts[3]->getDirection()+1};
+      rewrite(wall,coin,pacman,dir,ghosts);
       reWrite = false;
+    }
+
+    if(score == 362 || checkPacmanGhost(pacman,ghosts)){
+      alP->writeEndGame(score);
+      exit(1);
     }
 
   }
@@ -258,10 +258,9 @@ int main(){
     pacman[i].destroyImage();
   }
 
-  for(int i = 0; i < 3; i++){
-    ghost[i].destroyImage();
+  for(int i = 0; i < 4; i++){
+    ghosts[i]->destroyImage();
   }
-  smart->destroyImage();
 
   delete [] alP;
   delete [] wall;
@@ -269,6 +268,7 @@ int main(){
   delete [] pacman;
   delete [] ghost;
   delete [] smart;
+  delete [] ghosts;
 
   return 0;
 }
